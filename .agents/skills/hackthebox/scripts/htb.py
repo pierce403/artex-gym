@@ -249,6 +249,128 @@ def cmd_easy(args) -> dict:
     return {"machines": shown}
 
 
+QUEUE_PATH = "notes/queue.json"
+TIER_ORDER = {"Easy": 0, "Medium": 1, "Hard": 2, "Insane": 3}
+
+
+def _all_retired() -> list[dict]:
+    """Every retired machine, following meta.last_page rather than guessing."""
+    rows: list[dict] = []
+    page = 1
+    last = 1
+    while page <= last:
+        payload = call(
+            "GET",
+            f"/machine/list/retired/paginated/?page={page}&per_page=100&sort_by=release-date",
+        )
+        rows.extend(_machines(payload))
+        meta = payload.get("meta") or {}
+        last = int(meta.get("last_page") or 1)
+        page += 1
+    return rows
+
+
+def _slug(machine: dict) -> str:
+    """Directory name for a box: lowercase name, id-suffixed to stay unique."""
+    name = str(machine.get("name") or "unknown")
+    keep = [c.lower() if (c.isalnum() or c in "-_") else "-" for c in name]
+    return f"{''.join(keep).strip('-')}-{machine.get('id')}"
+
+
+def _load_queue(path: str) -> dict:
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {"boxes": []}
+
+
+def _save_queue(path: str, queue: dict) -> None:
+    import os
+
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    tmp = f"{path}.tmp"
+    with open(tmp, "w") as f:
+        json.dump(queue, f, indent=1, sort_keys=True)
+    os.replace(tmp, path)
+
+
+def cmd_queue(args) -> dict:
+    """Build or refresh the working queue: unowned boxes, easiest first.
+
+    Resumable by construction: each box keeps its recorded state across runs, so
+    re-running never resets `solved`, `timeout` or `skipped`. A box that has
+    since been owned on HTB is marked `solved` (that is the ground truth), which
+    also picks up boxes solved outside this loop.
+    """
+    path = args.path
+    previous = _load_queue(path)
+    prev_by_id = {str(b["id"]): b for b in previous.get("boxes", [])}
+
+    machines = _all_retired()
+    rows = []
+    for m in machines:
+        mid = str(m.get("id"))
+        owned = _owned(m)
+        prior = prev_by_id.get(mid, {})
+        state = prior.get("state") or "pending"
+        if owned:
+            state = "solved"
+        rows.append(
+            {
+                "id": m.get("id"),
+                "name": m.get("name"),
+                "slug": _slug(m),
+                "tier": m.get("difficultyText") or "Unknown",
+                "difficulty": m.get("difficulty") or 0,
+                "os": m.get("os"),
+                "free": bool(m.get("free")),
+                "retired": _retired(m),
+                "state": state,
+                "task_id": prior.get("task_id"),
+                "ip": prior.get("ip"),
+                "attempts": prior.get("attempts", 0),
+                "note": prior.get("note", ""),
+            }
+        )
+
+    # Difficulty order is the whole point: lowest numeric score first, then tier,
+    # then name so the order is stable and reproducible.
+    rows.sort(key=lambda r: (r["difficulty"], TIER_ORDER.get(r["tier"], 9), r["name"] or ""))
+
+    pending = [r for r in rows if r["state"] == "pending"]
+    queue = {
+        "generated_from": "GET /machine/list/retired/paginated (all pages)",
+        "total_retired": len(machines),
+        "unowned": sum(1 for r in rows if not _owned_source(r)),
+        "boxes": rows,
+    }
+    _save_queue(path, queue)
+
+    from collections import Counter
+
+    per_tier = Counter(r["tier"] for r in pending)
+    print(f"queue: {path}")
+    print(f"  retired seen : {len(machines)}")
+    print(f"  solved       : {sum(1 for r in rows if r['state'] == 'solved')}")
+    print(f"  timeout      : {sum(1 for r in rows if r['state'] == 'timeout')}")
+    print(f"  skipped      : {sum(1 for r in rows if str(r['state']).startswith('skipped'))}")
+    tiers = " ".join(f"{k}={v}" for k, v in sorted(per_tier.items()))
+    print(f"  pending      : {len(pending)}  {tiers}")
+    if pending:
+        nxt = pending[0]
+        print(
+            f"  next up      : {nxt['id']} {nxt['name']} "
+            f"({nxt['tier']}, diff {nxt['difficulty']})"
+        )
+    return {"pending": len(pending), "per_tier": dict(per_tier)}
+
+
+def _owned_source(row: dict) -> bool:
+    """A queue row came from a machine the API marked owned only if state says so."""
+    return row.get("state") == "solved"
+
+
 def cmd_find(args) -> dict:
     q = urllib.parse.quote(args.name)
     data = call("GET", f"/search/fetch?query={q}")
@@ -360,6 +482,10 @@ def main(argv: list[str]) -> int:
     sub.add_parser("stop").set_defaults(fn=cmd_stop)
     sub.add_parser("vpn").set_defaults(fn=cmd_vpn)
 
+    q = sub.add_parser("queue", help="build/refresh the resumable box queue")
+    q.add_argument("--path", default=QUEUE_PATH)
+    q.set_defaults(fn=cmd_queue)
+
     easy = sub.add_parser("easy", help="easiest unowned machines")
     easy.add_argument("--limit", type=int, default=10)
     easy.add_argument("--source", choices=["retired", "active", "both"], default="both")
@@ -399,7 +525,7 @@ def main(argv: list[str]) -> int:
     except HtbError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
-    if isinstance(result, dict) and args.cmd in {"list", "reset", "own", "vpn", "stop"}:
+    if isinstance(result, dict) and args.cmd in {"list", "reset", "own", "vpn", "stop", "queue"}:
         # Full payload, not a truncated prefix: piping this into another tool must
         # not produce unparseable JSON.
         print(json.dumps(result, indent=2))
