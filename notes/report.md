@@ -23,7 +23,7 @@ Verified live with `GET /api/v4/machine/profile/{id}`:
 | Orion | `notes/orion/` | 3 | `paused`, 0/3 goals, 2 findings | 123 |
 
 Blob counts are greps for each box's IP(s) across `data/llm-blobs`
-(538 blobs on disk in total). Task ids, states and finding counts were read
+(546 blobs on disk in total). Task ids, states and finding counts were read
 from `GET /api/tasks/{id}`; finding rows from the `findings` table.
 
 ### Why task 3 is paused rather than terminal
@@ -68,8 +68,8 @@ before/after snapshot.
    and the note wrongly claimed `ike-scan` was missing while also showing it
    used. Fixed by spawning the box again and giving ArTeX task 4 with the
    confirmed path; the task reached `done`, 3/3 goals.
-2. The blob totals in the first report (373 / 261) were stale. Measured now:
-   **473 total**, 263 in the run.
+2. Blob totals in the first report (373 / 261) were stale. Final measured
+   figures: **546 total** on disk; per-box 68 / 90 / 123.
 3. Task 3 (Orion) is `paused` with 0/3 goals even though ArTeX produced both
    findings and the flags were accepted. Flags were submitted before the
    planner judged the goals; nothing reconciles an externally-accepted flag

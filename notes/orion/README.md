@@ -60,7 +60,7 @@ stayed **0** throughout the whole session.
 
 ## Capture assertions
 
-Run `20261126T024001Z-8b01caa6`, blobs referencing this box's IP: **106**.
+Run `20261126T024001Z-8b01caa6`, blobs referencing this box's IP: **123**.
 `collector_dropped_total = 0`, `collector_write_errors_total = 0`.
 `traffic_capture = true`, `llm base_url = http://llm-logger:4000/v1`
 (asserted at the start and end of the whole run — see notes/report.md for the
