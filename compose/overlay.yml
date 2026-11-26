@@ -1,0 +1,86 @@
+# artex-gym compose overlay.
+#
+# Merged on top of the upstream ARTEX compose file, never replacing it. Run it
+# with the artex-gym root as the project directory so `./data` is ours, not the
+# ARTEX checkout's:
+#
+#   docker compose -p artex-gym --project-directory . \
+#     --env-file .env \
+#     -f "$ARTEX_GYM_ARTEX_SOURCE/docker-compose.yml" \
+#     -f compose/overlay.yml up -d
+#
+# `artexctl up` does exactly this. Because --project-directory is the repo root,
+# every relative path in the *upstream* file (./data, ./keys, ./skills, build
+# context .) would resolve here, so the overlay re-points the two that must stay
+# in the checkout and leaves ./data and ./keys as ours.
+#
+# Only three things happen here:
+#   1. ARTEX is built from the pinned checkout, not from our tree.
+#   2. ARTEX is pointed at the collector instead of the provider.
+#   3. The collector itself is added.
+#
+# Keys: ARTEX never sees the real provider key. It gets a local token, and the
+# collector holds ARTEX_GYM_UPSTREAM_API_KEY. That way a redaction bug in a log
+# line cannot leak the provider key through ARTEX's own logging.
+name: artex-gym
+
+services:
+  artex:
+    build:
+      context: ${ARTEX_GYM_ARTEX_SOURCE:?set ARTEX_GYM_ARTEX_SOURCE to the ARTEX checkout}
+      dockerfile: Dockerfile
+    environment:
+      # OpenAI-shaped endpoint served by the collector. ARTEX appends
+      # /chat/completions to this base, so the trailing /v1 is required.
+      ARTEX_LLM_PROVIDER: openai
+      ARTEX_LLM_BASE_URL: http://llm-logger:${ARTEX_GYM_COLLECTOR_PORT:-4000}/v1
+      ARTEX_LLM_MODEL: ${ARTEX_GYM_MODEL:?set ARTEX_GYM_MODEL in .env}
+      # Local token, not the provider key. The collector validates it in
+      # inbound mode and supplies the real Authorization header upward.
+      OPENAI_API_KEY: ${ARTEX_GYM_COLLECTOR_TOKEN:-artex-gym-local}
+      # The model-list fetch may reach private addresses only when the exact
+      # host:port is listed.
+      ARTEX_LLM_PRIVATE_ENDPOINTS: llm-logger:${ARTEX_GYM_COLLECTOR_PORT:-4000}
+      # No outbound GitHub release check from a benchmark run.
+      ARTEX_UPDATE_CHECK: ""
+    volumes:
+      # Skills must come from the checkout, not from our (empty) ./skills.
+      - ${ARTEX_GYM_ARTEX_SOURCE}/skills:/app/skills
+    depends_on:
+      llm-logger:
+        condition: service_healthy
+
+  llm-logger:
+    build:
+      # Repo root, so one pyproject/uv.lock serves CLI and collector.
+      context: .
+      dockerfile: compose/llm-logger/Dockerfile
+    image: artex-gym/llm-logger:${ARTEX_GYM_LLM_LOGGER_TAG:-dev}
+    environment:
+      ARTEX_GYM_UPSTREAM_BASE_URL: ${ARTEX_GYM_UPSTREAM_BASE_URL:?set ARTEX_GYM_UPSTREAM_BASE_URL in .env}
+      ARTEX_GYM_UPSTREAM_API_KEY: ${ARTEX_GYM_UPSTREAM_API_KEY:?set ARTEX_GYM_UPSTREAM_API_KEY in .env}
+      ARTEX_GYM_COLLECTOR_TOKEN: ${ARTEX_GYM_COLLECTOR_TOKEN:-artex-gym-local}
+      ARTEX_GYM_BLOB_DIR: /data/llm-blobs
+      ARTEX_GYM_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-artex}:${POSTGRES_PASSWORD:?Please set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-artex}
+      # Bounded queue: overflow is a drop, never backpressure on the model call.
+      ARTEX_GYM_QUEUE_MAX: ${ARTEX_GYM_QUEUE_MAX:-1024}
+    volumes:
+      - ./data/llm-blobs:/data/llm-blobs
+    ports:
+      # Host-local only; the join reads blobs from disk, not over HTTP.
+      - "127.0.0.1:${ARTEX_GYM_COLLECTOR_PORT:-4000}:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      # No curl in the slim image; urllib is always there.
+      test:
+        - CMD
+        - python
+        - -c
+        - "import sys,urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:4000/api/health', timeout=2).status == 200 else 1)"
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    restart: unless-stopped

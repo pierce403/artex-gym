@@ -1,0 +1,13 @@
+{
+  "$comment": "See adr/0001-artex-pinning.md. artex_git_sha is the authoritative pin; image_digest records what was actually built from it.",
+  "artex_git_sha": "38c7477c51636c9221c78683f4aa9c4f08f65c19",
+  "artex_version": "v0.7.0",
+  "artex_git_describe": null,
+  "artex_git_describe_note": "No tags exist in the local checkout, so git describe cannot run. artex_version is taken from the GitHub release, which is the newest tag upstream.",
+  "image_ref": "artex:local",
+  "image_digest": null,
+  "image_digest_note": "Filled by `artexctl up` on first successful build; null means 'record me'. Swap image_ref to ghcr.io/baarai/artex@sha256:... once the package is publicly pullable.",
+  "source_repo": "https://github.com/BaaRai/ARTEX",
+  "license": "AGPL-3.0",
+  "recorded_at": "2026-11-26"
+}

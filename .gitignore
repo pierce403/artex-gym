@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Runtime artifacts: never committed.
+.env
+data/
+runs/
+artifacts/
+*.jsonl
+!fixtures/**/*.jsonl
+
+# ARTEX checkout used for provisioning is referenced by path, never copied in.
+compose/.build/
+.pytest_cache/
+.ruff_cache/
