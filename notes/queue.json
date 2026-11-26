@@ -121,18 +121,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 30,
    "free": false,
    "id": 118,
-   "ip": null,
+   "ip": "10.129.137.119",
    "name": "Bashed",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "bashed-118",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "11",
    "tier": "Easy"
   },
   {
