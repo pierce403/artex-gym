@@ -631,18 +631,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 34,
    "free": false,
    "id": 684,
-   "ip": null,
+   "ip": "10.129.137.171",
    "name": "Editor",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "editor-684",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "42",
    "tier": "Easy"
   },
   {
