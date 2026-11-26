@@ -781,18 +781,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 35,
    "free": false,
    "id": 574,
-   "ip": null,
+   "ip": "10.129.137.185",
    "name": "Codify",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "codify-574",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "49",
    "tier": "Easy"
   },
   {
