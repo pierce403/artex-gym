@@ -22,11 +22,11 @@
    "id": 2,
    "ip": "10.129.137.108",
    "name": "Legacy",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "legacy-2",
-   "state": "pending",
+   "state": "solved",
    "task_id": "6",
    "tier": "Easy"
   },
