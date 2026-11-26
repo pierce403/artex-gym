@@ -616,18 +616,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 34,
    "free": false,
    "id": 651,
-   "ip": null,
+   "ip": "10.129.231.223",
    "name": "Dog",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "dog-651",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "41",
    "tier": "Easy"
   },
   {
