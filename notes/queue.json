@@ -802,11 +802,11 @@
    "id": 356,
    "ip": "10.129.238.59",
    "name": "Explore",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Android",
    "retired": true,
    "slug": "explore-356",
-   "state": "pending",
+   "state": "partial:user-only",
    "task_id": "50",
    "tier": "Easy"
   },
