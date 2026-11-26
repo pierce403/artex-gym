@@ -511,18 +511,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 13,
-   "ip": null,
+   "ip": "10.129.95.233",
    "name": "Grandpa",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Windows",
    "retired": true,
    "slug": "grandpa-13",
-   "state": "pending",
-   "task_id": null,
+   "state": "timeout",
+   "task_id": "34",
    "tier": "Easy"
   },
   {
