@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Capture, join, dataset, train and eval loop for ARTEX pentest trajectories"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-license = { text = "AGPL-3.0-only" }
+license = { file = "LICENSE" }
 dependencies = [
     "typer>=0.15",
     "pydantic>=2.9",

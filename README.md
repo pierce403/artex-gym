@@ -12,8 +12,18 @@ the checkout is that commit before building — see `adr/0001-artex-pinning.md`.
 
 ## Status
 
-M0 — skeleton only. Every command exits with `NotImplemented`; `up` also
-verifies the ARTEX pin first.
+**M0 and M1 done; M2–M6 are stubs.** `up` / `down` work end to end and the
+collector captures real calls; `run`, `collect`, `dataset`, `train` and `eval`
+still exit `NotImplemented`.
+
+M1 proves the pipe holds water: `artexctl up` pins the ARTEX commit, builds and
+starts ARTEX + `llm-logger` + Postgres, authenticates, turns capture on, and
+**asserts** it — a stack that runs without capturing is treated as a failure.
+Calls with `curl` through `localhost:4000/v1/chat/completions` produce
+immutable gzipped blobs under `data/llm-blobs/{run_id}/`.
+
+See `notes/report.md` for a real run: three HackTheBox machines driven to
+HTB-accepted flags with ARTeX, with capture held at 0 drops throughout.
 
 ## Install
 
@@ -37,7 +47,21 @@ verifies the ARTEX pin first.
     fixtures/     recorded API + LLM payloads for CI
     tests/        contract tests, offline
 
+## Skills
+
+Project-local agent skills in `.agents/skills/`, usable by any agent that reads
+that convention:
+
+- `artex-running` — tell a *capturing* stack from a merely running one, with
+  `scripts/artex-status.sh` (read-only by default, `--fix` to repair).
+- `hackthebox` — HTB Labs v4/v5 client (`scripts/htb.py`) with a verified
+  route inventory in `references/endpoints.md`, including the traps that cost
+  the most time.
+
 ## Documents
 
-- `adr/` — decisions, in order. Start with `adr/0001-artex-pinning.md`.
-- `docs/` — milestone notes and open questions.
+- `adr/` — decisions, in order. Start with `adr/0001-artex-pinning.md`
+  (why we pin a commit, not a tag) and `adr/0002-collector-placement.md`
+  (why capture lives in a sidecar and what "fail-open" means).
+- `docs/milestones.md` — what each milestone delivered and what it left open.
+- `notes/` — per-box write-ups from the first real run (`notes/report.md`).
