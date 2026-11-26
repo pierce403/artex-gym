@@ -1246,18 +1246,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 38,
    "free": false,
    "id": 638,
-   "ip": null,
+   "ip": "10.129.231.194",
    "name": "LinkVortex",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "linkvortex-638",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "73",
    "tier": "Easy"
   },
   {
