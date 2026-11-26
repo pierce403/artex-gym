@@ -1261,18 +1261,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 38,
    "free": false,
    "id": 699,
-   "ip": null,
+   "ip": "10.129.137.246",
    "name": "Lock",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Windows",
    "retired": true,
    "slug": "lock-699",
-   "state": "pending",
-   "task_id": null,
+   "state": "partial:user-only",
+   "task_id": "74",
    "tier": "Easy"
   },
   {
