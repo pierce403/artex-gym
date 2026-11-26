@@ -1051,18 +1051,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 37,
    "free": false,
    "id": 26,
-   "ip": null,
+   "ip": "10.129.137.226",
    "name": "Bank",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "bank-26",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "65",
    "tier": "Easy"
   },
   {
