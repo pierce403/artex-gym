@@ -5,14 +5,14 @@
   "status": "active",
   "autoContinue": true,
   "usage": {
-    "tokensUsed": 211097,
-    "activeSeconds": 2010
+    "tokensUsed": 260172,
+    "activeSeconds": 3459
   },
   "sisyphus": false,
   "createdAt": "2026-11-26T02:43:43.552Z",
-  "updatedAt": "2026-11-26T03:18:58.981Z",
+  "updatedAt": "2026-11-26T03:43:27.651Z",
   "activePath": ".pi/goals/active_goal_2026112518434355_mwwy7l8g-gyp5ji.md",
-  "revision": 178,
+  "revision": 216,
   "scheduler": {
     "version": 1,
     "owner": "01a21569-d72f-7448-bf24-aeb1cf6509fe",
@@ -75,8 +75,10 @@
       {
         "id": "t6-report",
         "title": "Final report: all three with solved/unsolved and evidence paths",
-        "status": "pending",
-        "verificationContract": "A summary naming each box, outcome, notes path, task id, blob run id, and capture drop count."
+        "status": "complete",
+        "verificationContract": "A summary naming each box, outcome, notes path, task id, blob run id, and capture drop count.",
+        "completedAt": "2026-11-26T03:19:03.765Z",
+        "evidence": "notes/REPORT.md lists all three with flags accepted by HTB, notes paths, task ids, blob run 20261126T024001Z-8b01caa6 and dropped=0."
       }
     ],
     "blockCompletion": false,
@@ -112,8 +114,8 @@ If blocked: Stop and ask when (a) the Venice balance exhausts again (402 through
 - Status: running
 - Auto-continue: on
 - Sisyphus mode: no
-- Time spent: 33m30s
-- Tokens used: 211K (211,097) tokens
+- Time spent: 57m39s
+- Tokens used: 260K (260,172) tokens
 - Verification contract: For each of the three boxes: `notes/<box>/` exists with flag and outcome; `htb.py active`/profile shows the box spawned then terminated as intended; the ARTeX task exists with a terminal state or a recorded reason; `data/llm-blobs` contains blobs whose run covers that box; `artexctl`-side capture assertions pass with `dropped=0` (or the drop count is reported). Final report lists all three with solved/unsolved and the exact evidence path for each.
 ## Tasks
 
@@ -123,5 +125,5 @@ If blocked: Stop and ask when (a) the Venice balance exhausts again (402 through
 - [x] t3-cap: Cap (351, easy, free): spawn, ARTeX task, capture, flag, notes — evidence: Both flags accepted by HTB (machine_pwned true); notes/cap/ has README+poc.md+flags.txt; task 2 done 3/3; run 20261126T024001Z-8b01caa6 165 calls, 0 dropped.
 - [x] t4-expressway: Expressway (736, easy): spawn, ARTeX task, capture, flag, notes — evidence: Both flags accepted by HTB (user a126d80d..., root 780a5799...); notes/expressway/README.md has full attack path (ike-scan PSK -> SSH ike -> CVE-2025-32463 sudo 1.9.17); box terminated.
 - [x] t5-orion: Orion (945, easy): spawn, ARTeX task, capture, flag, notes — evidence: Both flags accepted by HTB (user ccdad380..., root 26c5e341...); notes/orion/README.md has full path (CVE-2025-32432 -> .env mysql root -> adam:darkangel -> root telnetd); box terminated.
-- [ ] t6-report: Final report: all three with solved/unsolved and evidence paths — contract: A summary naming each box, outcome, notes path, task id, blob run id, and capture drop count.
+- [x] t6-report: Final report: all three with solved/unsolved and evidence paths — evidence: notes/REPORT.md lists all three with flags accepted by HTB, notes paths, task ids, blob run 20261126T024001Z-8b01caa6 and dropped=0.
 

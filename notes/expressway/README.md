@@ -5,7 +5,9 @@
 - **User flag** `a126d80d35481a1a8a84ea88f28af199` — **accepted by HTB**
 - **Root flag** `780a5799e4c3c9366685769900f12891` — **accepted by HTB**
 - **Outcome** SOLVED (`machine_pwned: true`)
-- **ArTeX task** none — solved manually (see "Why no task" below)
+- **ArTeX task** 4 (`HTB Expressway (10.129.137.91)`), `done`, 3/3 goals, 2 findings
+- **Note** the box was first solved by hand (task-less); it was then respawned
+  and given to ArTeX as task 4, which solved it independently.
 
 ## Attack path (complete)
 
@@ -25,17 +27,23 @@
 Exploit source and binaries: `.work/probes/` (`pwn5.c`, `libnss_pwn.so.2`, `t`,
 `exp9.py`).
 
-## Why no ArTeX task
+## Why there was no task the first time (corrected)
 
-ArTeX's container had **no `ike-scan`, no `hashcat`, no `tshark`**, and IPsec is
-a UDP protocol the agents had no tool for. The container also **lacks
-`CAP_NET_ADMIN`** and `/dev/net/tun`, so strongSwan cannot build a tunnel
-interface from inside ARTeX — meaning the box is solvable *only* by reaching it
-directly over the existing SSH port, which needs the PSK cracked outside.
+The first pass had no tools: `ike-scan`, `tshark`, `psk-crack` were **not
+installed** at that moment, so the box was solved by hand. `hashcat` is still
+absent, but `psk-crack` (ships with ike-scan) is enough for aggressive-mode
+PSKs, so the gap was tooling, not protocol.
 
-So this box is a genuine capability gap in the current stack, recorded rather
-than worked around with a fake "task". Fix candidates: add `ike-scan`/`hashcat`
-to the image, and give the container `cap_add: NET_ADMIN` + `/dev/net/tun`.
+After `apt-get install ike-scan tshark tcpdump` the box was respawned
+(`10.129.137.91`) and given to ArTeX as **task 4**, which reproduced the whole
+path itself: IKE aggressive mode → `psk-crack` → SSH as `ike` → custom
+`sudo 1.9.17` (CVE-2025-32463) → root. Task 4: `done`, 3/3 goals, 2 findings
+(1 critical, 1 high).
+
+Still true: the container has **no `CAP_NET_ADMIN`** and no `/dev/net/tun`, so
+strongSwan cannot build an actual tunnel interface. That did not matter here —
+the privesc is reachable over plain SSH — but it would for a box needing real
+IPsec transport. Fix candidate: `cap_add: NET_ADMIN` + `/dev/net/tun`.
 
 ## Recon (verified from the container, 2026-11-26)
 
@@ -91,3 +99,11 @@ key "freakingrockstarontheroad" matches SHA1 hash 8318d604...
 `psk-crack` ships with ike-scan. Wordlist at `/app/data/wordlists/rockyou.txt.gz`
 (134M, plain text despite the name).
 Handshake saved at `/tmp/psk.txt` (perishable — recapture with the ike-scan line above).
+
+## Capture assertions
+
+Run `20261126T024001Z-8b01caa6`, blobs referencing this box's IP: **90**.
+`collector_dropped_total = 0`, `collector_write_errors_total = 0`.
+`traffic_capture = true`, `llm base_url = http://llm-logger:4000/v1`
+(asserted at the start and end of the whole run — see notes/report.md for the
+gap: this was not snapshotted per box).

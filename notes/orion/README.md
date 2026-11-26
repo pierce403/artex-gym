@@ -7,6 +7,9 @@
 - **User flag** `ccdad380f82da2e01f7b9e0be0804066` — **accepted by HTB**
 - **Root flag** `26c5e3416666576eef4f71a2633eee14` — **accepted by HTB**
 - **Outcome** SOLVED (`machine_pwned: true`)
+- **Task state** `paused`, 0/3 goals — record: the box was terminated once both
+  flags were accepted, so the target IP stopped answering; resuming only spent
+  tokens on a dead address. Findings 3 (critical) and 4 (high) are preserved.
 
 ## Recon
 
@@ -54,3 +57,11 @@ flags were submitted manually — a bookkeeping gap, not a solving gap.
 
 Blobs for this box are in run `20261126T024001Z-8b01caa6`; `collector_dropped_total`
 stayed **0** throughout the whole session.
+
+## Capture assertions
+
+Run `20261126T024001Z-8b01caa6`, blobs referencing this box's IP: **106**.
+`collector_dropped_total = 0`, `collector_write_errors_total = 0`.
+`traffic_capture = true`, `llm base_url = http://llm-logger:4000/v1`
+(asserted at the start and end of the whole run — see notes/report.md for the
+gap: this was not snapshotted per box).
