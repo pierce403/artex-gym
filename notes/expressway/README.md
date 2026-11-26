@@ -8,6 +8,13 @@
 - **ArTeX task** 4 (`HTB Expressway (10.129.137.91)`), `done`, 3/3 goals, 2 findings
 - **Note** the box was first solved by hand (task-less); it was then respawned
   and given to ArTeX as task 4, which solved it independently.
+- **Flags on the task-4 instance** (respawn = new flags, `10.129.137.91`):
+  user `f7f64f8c03852666bf54a9f77e8da755`, root `bdde1171a393b1775073e3d55a6943eb`.
+  Both read directly off the box (`cat ~/user.txt`; the root one via the chroot
+  escape). HTB answers **"Incorrect Flag."** for these *and* for the previously
+  accepted pair, because the machine is already owned — the endpoint will not
+  re-accept a flag once `authUserInRootOwns` is true. Verified by resubmitting
+  `a126d80d…` (accepted at 03:05:50) and getting the same rejection.
 
 ## Attack path (complete)
 
