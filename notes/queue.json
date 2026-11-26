@@ -346,18 +346,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 559,
-   "ip": null,
+   "ip": "10.129.229.88",
    "name": "CozyHosting",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "cozyhosting-559",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "75",
    "tier": "Easy"
   },
   {
