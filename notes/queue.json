@@ -256,18 +256,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 31,
    "free": false,
    "id": 671,
-   "ip": null,
+   "ip": "10.129.234.44",
    "name": "Retro",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "retro-671",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "18",
    "tier": "Easy"
   },
   {
