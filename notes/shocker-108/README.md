@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 79 blobs referencing `10.129.137.162`
+- ArTeX task `36`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Apache 2.4.18 (Ubuntu) serves a Bash-based CGI script /cgi-bin/user.sh that is vulnerable to Shellshock; supplying the payload in the User-Agent heade
+  - **high** — User shelly may run /usr/bin/perl as root with no password (sudoers '(root) NOPASSWD: /usr/bin/perl'); using the Shellshock foothold, `sudo perl -e 'p

@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 109 blobs referencing `10.129.234.71`
+- ArTeX task `29`; collector `dropped=0` for the run
+- Findings:
+
+  - **medium** — Anonymous LDAP bind lets an unauthenticated attacker read user descriptions; the it user's description disclosed the initial password 'BabyStart123!',
+  - **high** — Backup Operators membership lets Caroline.Robinson read any file over SMB using FILE_OPEN_FOR_BACKUP_INTENT, including Administrator's root.txt (machi

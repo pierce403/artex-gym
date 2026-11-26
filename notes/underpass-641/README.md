@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 146 blobs referencing `10.129.231.213`
+- ArTeX task `28`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — Local user svcMosh can execute arbitrary commands as root via `sudo NOPASSWD /usr/bin/mosh-server`; a root mosh-server was started and connected to wi
+  - **high** — daloRADIUS at /daloradius/ logs in with default administrator:radius and discloses RADIUS user svcMosh's MD5-Password 412DD4759978ACFCC81DEAB01B382403

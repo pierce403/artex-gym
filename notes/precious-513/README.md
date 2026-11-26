@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 151 blobs referencing `10.129.228.98`
+- ArTeX task `55`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — The Sinatra 'Convert Web Page to PDF' app at http://precious.htb/ passes the user-supplied url parameter unescaped into the wkhtmltopdf shell command
+  - **high** — User henry may run `sudo /usr/bin/ruby /opt/update_dependencies.rb` without a password. The script calls YAML.load(File.read("dependencies.yml")) on a

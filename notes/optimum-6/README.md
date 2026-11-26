@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 243 blobs referencing `10.129.137.122`
+- ArTeX task `13`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — HttpFileServer 2.3 on 10.129.137.122:80 is vulnerable to CVE-2014-6287: the `search` parameter is parsed by the HFS template macro engine, allowing ar
+  - **critical** — MS16-032 / CVE-2016-0099 (Secondary Logon handle leak) on 10.129.137.122 (Server 2012 R2, patch level 11/2014): from the low-priv HFS process account

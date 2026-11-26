@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 102 blobs referencing `10.129.232.23`
+- ArTeX task `62`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — view.php takes an arbitrary `username` and returns that user's uploaded files, allowing any registered user to read amanda's privacy.odt which disclos
+  - **critical** — Internal ISPConfig 3.2.2 on 127.0.0.1:8080 (reachable via SSH tunnel as tobias) is vulnerable to CVE-2023-46818: after login as admin (admin/slowmotio

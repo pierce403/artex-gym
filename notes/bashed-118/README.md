@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 124 blobs referencing `10.129.137.119`
+- ArTeX task `11`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated phpbash web shell at http://10.129.137.119/dev/phpbash.php executes arbitrary OS commands as www-data.
+  - **critical** — Local privesc from www-data to root: www-data can sudo to scriptmanager, scriptmanager owns the /scripts directory, and a root cron executes /scripts/

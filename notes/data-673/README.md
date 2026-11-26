@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 63 blobs referencing `10.129.234.47`
+- ArTeX task `31`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — Unauthenticated path traversal on Grafana 8.0.0 at http://10.129.234.47:3000/public/plugins/<plugin>/../../../../../../../../<path> reads arbitrary ho
+  - **high** — User boris has '(root) NOPASSWD: /snap/bin/docker exec *'. Exec'ing as root into the running 'grafana' container (privileged, CapEff=0x3fffffffff) exp

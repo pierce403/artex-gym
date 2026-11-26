@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 126 blobs referencing `10.129.137.166`
+- ArTeX task `39`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — User fismathack can run `/usr/sbin/needrestart` (3.7) as root without a password; needrestart imports a Python sitecustomize.py from the PYTHONPATH of
+  - **high** — POST /convert saves uploads with the raw client-supplied filename via os.path.join(UPLOAD_FOLDER, filename); an absolute filename lets an authenticate

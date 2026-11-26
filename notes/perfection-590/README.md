@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 155 blobs referencing `10.129.229.121`
+- ArTeX task `53`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — The POST /weighted-grade-calc handler concatenates user-controlled category1..5 values into an ERB template (ERB.new(...).result). The validation /^[a
+  - **high** — /home/susan/Migration/pupilpath_credentials.db is readable by the low-privilege web user susan and stores unsalted SHA-256 password hashes. susan's ha

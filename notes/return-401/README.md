@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 160 blobs referencing `10.129.95.241`
+- ArTeX task `14`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — Domain user svc-printer (member of Server Operators) authenticates over SMB and, using the SMB2 create option FILE_OPEN_FOR_BACKUP_INTENT (0x2000), op

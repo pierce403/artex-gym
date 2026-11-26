@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 125 blobs referencing `10.129.137.168`
+- ArTeX task `40`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — The Microsoft FTP service on 10.129.137.168 allows anonymous login with write permission to the IIS document root C:\inetpub\wwwroot, so any unauthent
+  - **high** — The target runs Windows 7 Enterprise 6.1.7600 (x86 RTM) without the afd.sys fix; running the MS11-046 (CVE-2011-1249) x86 exploit from the webshell es

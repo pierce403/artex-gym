@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 92 blobs referencing `10.129.137.185`
+- ArTeX task `49`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — vm2 3.9.16 sandbox escape (CVE-2023-30547) in Codify's POST /run gives unauthenticated RCE as the svc user.
+  - **high** — Sudo mysql-backup.sh compares the root DB password with an unquoted glob pattern, letting joshua brute-force /root/.creds; that password is reused for

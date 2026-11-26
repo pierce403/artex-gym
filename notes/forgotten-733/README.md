@@ -9,6 +9,6 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 95 blobs referencing `10.129.234.81`
+- ArTeX task `51`; collector `dropped=0` for the run
+- Findings: none recorded

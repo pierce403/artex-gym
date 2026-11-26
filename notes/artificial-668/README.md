@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 185 blobs referencing `10.129.232.51`
+- ArTeX task `59`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — Unauthenticated-model RCE via malicious Keras .h5 Lambda layer: uploading a crafted model to artificial.htb and hitting /run_model/<uuid> executes arb

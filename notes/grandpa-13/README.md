@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 193 blobs referencing `10.129.95.233`
+- ArTeX task `34`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated remote code execution on 10.129.95.233 (Microsoft-IIS/6.0, WebDAV) via CVE-2017-7269: a PROPFIND with a crafted 'If:' header + alphanu

@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 140 blobs referencing `10.129.137.117`
+- ArTeX task `8`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Apache Tomcat 7.0.88 Manager on 10.129.137.117:8080 is protected only by the default credentials tomcat:s3cret; authenticating to /manager/html and up

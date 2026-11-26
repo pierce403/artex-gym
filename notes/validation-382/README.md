@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 96 blobs referencing `10.129.95.235`
+- ArTeX task `37`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — The POST / registration form stores the 'country' value and /account.php later concatenates it into a SELECT, giving second-order UNION SQL injection
+  - **high** — The MySQL/app password uhc-9qual-global-pw found in /var/www/html/config.php is also the system root account password, so any web-shell foothold (www-

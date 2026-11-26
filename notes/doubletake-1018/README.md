@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 73 blobs referencing `10.129.137.215`
+- ArTeX task `61`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated SSH password auth bypass on 10.129.137.215:22 (OpenSSH 10.6 built against musl) lets any remote attacker log in as the locked 'alpine'
+  - **critical** — Authenticated user bob can upload archives through the Zentara /deploy endpoint (Docker 29.5.0). Overwriting the container's /usr/bin/xz with a trojan

@@ -9,6 +9,10 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 75 blobs referencing `10.129.137.176`
+- ArTeX task `46`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated file upload in Chamilo bigUpload.php on lms.permx.htb leads to remote code execution as www-data
+  - **high** — User mtz can run /opt/acl.sh via NOPASSWD sudo; symlink to /etc/passwd grants mtz rwx on the file, allowing a uid-0 account and root compromise
+  - **high** — Chamilo configuration.php exposes DB password that is reused as system user mtz's password, giving SSH access and user.txt

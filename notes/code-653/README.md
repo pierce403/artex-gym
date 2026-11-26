@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 151 blobs referencing `10.129.231.240`
+- ArTeX task `48`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Remote code execution in the Code web app: /run_code's substring keyword blacklist is trivially bypassed (string concatenation + globals()), giving ar
+  - **high** — sudo-allowed /usr/bin/backy.sh (martin NOPASSWD) validates directories with a prefix check after a single non-recursive '../' strip, so '....//....//r

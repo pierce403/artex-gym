@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 132 blobs referencing `10.129.137.112`
+- ArTeX task `7`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated root command execution on Samba 3.0.20 (HTB Lame) via username map script injection (CVE-2007-2447); arbitrary commands ran as root an

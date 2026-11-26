@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 168 blobs referencing `10.129.230.176`
+- ArTeX task `10`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Authenticated PRTG Network Monitor 18.1.37 'Execute Program' notification parameter injection (CVE-2018-9276) executes arbitrary OS commands as NT AUT
+  - **high** — Anonymous FTP on Netmon exposes the Windows C: drive, including the user flag and the PRTG configuration backup containing the prtgadmin DB password

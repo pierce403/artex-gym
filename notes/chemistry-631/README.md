@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 109 blobs referencing `10.129.231.170`
+- ArTeX task `38`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Authenticated users of the Flask CIF analyzer can upload a crafted .cif whose _space_group_magn.transform_BNS_Pp_abc value is eval()'d by pymatgen's J
+  - **critical** — The root-owned monitoring app /opt/monitoring_site/app.py (aiohttp 3.9.1) on 127.0.0.1:8080 serves /assets with follow_symlinks and is vulnerable to C

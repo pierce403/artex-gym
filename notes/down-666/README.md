@@ -9,6 +9,10 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 161 blobs referencing `10.129.234.87`
+- ArTeX task `32`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated OS command execution as www-data on HTB Down (10.129.234.87:80): the expertmode=tcp `port` POST parameter is intval()-validated but th
+  - **high** — HTB Down local privilege escalation: /home/aleks/.local/share/pswm/pswm is world-readable and its pswm master password is the dictionary word 'flower'
+  - **high** — Aleks's pswm password vault (world-readable /home/aleks/.local/share/pswm/pswm, mode 664) is protected only by the weak master password 'flower'; decr

@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 199 blobs referencing `10.129.244.96`
+- ArTeX task `33`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — CVE-2024-46987: authenticated path traversal in Camaleon CMS /admin/media/download_private_file?file= allows arbitrary file read; with a self-register
+  - **high** — trivia may run "(ALL) NOPASSWD: /usr/bin/facter"; a custom fact loaded via --custom-dir executes Ruby, giving root and the root flag.

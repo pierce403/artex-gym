@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 122 blobs referencing `10.129.228.217`
+- ArTeX task `30`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Searchor 2.4.0 eval injection in the Searcher Flask app's /search endpoint (query parameter) allows unauthenticated remote command execution as user s
+  - **critical** — User svc can run `sudo /usr/bin/python3 /opt/scripts/system-checkup.py full-checkup` (password = leaked Gitea/Git credential jh1usoih2bkjaspwe92), and

@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 223 blobs referencing `10.129.245.50`
+- ArTeX task `52`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated RCE in MCPJam Inspector (CVE-2026-23744) on https://mcp.kobold.htb: POST /api/mcp/connect spawns an attacker-supplied stdio command; e
+  - **medium** — Arcane v1.13.0 on 10.129.245.50:3552 exposes GET /api/templates/fetch?url= with no authentication and follows arbitrary http(s) URLs from the server,

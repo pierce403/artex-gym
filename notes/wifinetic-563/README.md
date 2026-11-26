@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 117 blobs referencing `10.129.229.90`
+- ArTeX task `16`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — vsftpd allows anonymous login and serves backup-OpenWrt-2023-07-26.tar, which contains etc/config/wireless with the plaintext WiFi PSK 'VeRyUniUqWiFIP
+  - **high** — The OpenWrt AP (BSSID 02:00:00:00:00:00) accepts the default WPS PIN 12345670; reaver on the pre-created mon0 monitor interface recovers the live WPA

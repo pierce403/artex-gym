@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 93 blobs referencing `10.129.137.136`
+- ArTeX task `23`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated POST /run_code passes user JavaScript to js2py.eval_js (js2py==0.74 with disable_pyimport); CVE-2024-28397 payload walks Python object
+  - **high** — User marco (password sweetangelbabylove, groups marco,backups) may run /usr/local/bin/npbackup-cli as ALL NOPASSWD; npbackup 3.0.1 config is fully use

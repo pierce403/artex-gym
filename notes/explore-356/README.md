@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 111 blobs referencing `10.129.238.59`
+- ArTeX task `50`; collector `dropped=0` for the run
+- Findings:
+
+  - **high** — The ES File Explorer HTTP server on 10.129.238.59:59777 accepts unauthenticated GET requests with arbitrary absolute filesystem paths and returns the

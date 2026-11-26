@@ -9,6 +9,8 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 209 blobs referencing `10.129.137.108`
+- ArTeX task `6`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated anonymous SMB access to \\10.129.137.108\pipe\spoolss allowed the MS17-010 EternalChampion exploit (CVE-2017-0143 family) to corrupt t

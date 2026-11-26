@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 57 blobs referencing `10.129.228.60`
+- ArTeX task `54`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Authenticated POST /printer passes the `filetype` parameter unsanitized into a shell command, giving OS command execution as the web user wizard.
+  - **high** — wizard may run `sudo SETENV: NOPASSWD: /opt/cleanup.sh`, which sources /opt/.bashrc then calls `find` by bare name; hijacking PATH with a fake `find`

@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 118 blobs referencing `10.129.137.171`
+- ArTeX task `42`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Unauthenticated GET to /xwiki/bin/get/Main/SolrSearch?media=rss with a crafted text parameter breaks out of the Velocity context into a Groovy macro (
+  - **high** — The setuid-root, group-netdata helper /opt/netdata/usr/libexec/netdata/plugins.d/ndsudo resolves allowed executables (e.g. nvme) via the caller's PATH

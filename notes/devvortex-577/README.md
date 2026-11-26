@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 150 blobs referencing `10.129.229.146`
+- ArTeX task `24`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — logan (uid 1000) may run `sudo /usr/bin/apport-cli` as any user; apport-cli 2.20.11 opens the crash report in a root pager with `!sh` available, yield
+  - **critical** — dev.devvortex.htb Joomla exposes /api/index.php/v1/config/application?public=true to unauthenticated users, leaking DB/admin credentials (lewis:P4nthe

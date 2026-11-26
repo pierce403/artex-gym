@@ -9,6 +9,9 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 57 blobs referencing `10.129.137.213`
+- ArTeX task `60`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — Apache OFBiz 18.12 at https://bizness.htb is vulnerable to CVE-2023-51467: an unauthenticated POST to /webtools/control/ProgramExport with empty USERN
+  - **high** — The OFBiz admin password hash is stored in the world-readable Derby DB as a single-iteration salted SHA1 ($SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I), cracks

@@ -9,6 +9,10 @@
 
 ## Captured
 
-Blobs for this box live under `data/llm-blobs/` for the run active at the
-time; see the collector's `/api/health` run id. Placeholder: filled by the
-report step once the run is joined.
+- Blob run `20261126T024001Z-8b01caa6` — 154 blobs referencing `10.129.237.241`
+- ArTeX task `47`; collector `dropped=0` for the run
+- Findings:
+
+  - **critical** — World-readable /opt/crontabs/crontab.db on the Planning host leaks the password of the root-run Crontab UI (127.0.0.1:8000); authenticated job creatio
+  - **medium** — The Grafana container's GF_SECURITY_ADMIN_PASSWORD (RioTecRANDEntANT!) is reused as the host SSH password for user enzo, giving a shell and the user f
+  - **critical** — Grafana 11.0.0 on grafana.planning.htb: the experimental SQL Expressions endpoint (/api/ds/query?ds_type=__expr__&expression=true) passes user-control
