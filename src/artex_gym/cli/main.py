@@ -7,14 +7,14 @@ as the interface spec.
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 from typing import Annotated
 
 import typer
 
 from artex_gym import __version__
-from artex_gym.pin import ArtexPin, PinError, verify
+from artex_gym.artex_api import ArtexError
+from artex_gym.pin import PinError
 
 app = typer.Typer(
     name="artexctl",
@@ -28,24 +28,16 @@ app = typer.Typer(
 
 NOT_IMPLEMENTED_STATUS = 3
 PIN_MISMATCH_STATUS = 4
-
-
-def _artex_source(cli_value: Path | None) -> Path:
-    """Resolve the ARTEX checkout: flag, then env, then the pin file's default."""
-    if cli_value is not None:
-        return cli_value.expanduser()
-    env = os.environ.get("ARTEX_GYM_ARTEX_SOURCE")
-    if env:
-        return Path(env).expanduser()
-    raise PinError(
-        "no ARTEX checkout: pass --artex-source or set ARTEX_GYM_ARTEX_SOURCE (see .env.example)"
-    )
+STACK_FAILED_STATUS = 5
 
 
 def _check_pin(cli_value: Path | None) -> None:
-    """Verify the checkout is the commit in compose/artex.lock.json."""
-    pin = ArtexPin.load()
-    state = verify(_artex_source(cli_value), pin)
+    """Verify the checkout is the commit in compose/artex.lock.json.
+
+    Source resolution lives in up.check_pin, because it also has to consult
+    .env — a checkout named only there is a normal configuration.
+    """
+    pin, state, _ = up_mod.check_pin(cli_value)
     typer.secho(
         f"ARTEX pinned: {state.head_sha[:12]} ({pin.git_describe or state.describe})",
         fg=typer.colors.GREEN,
@@ -79,6 +71,9 @@ def main(
 # --------------------------------------------------------------------- stack
 
 
+from artex_gym import up as up_mod  # noqa: E402  (used by up/down below)
+
+
 @app.command(help="Provision the stack: ARTEX + collector + Postgres, from a compose overlay. [M1]")
 def up(
     artex_source: Annotated[
@@ -94,23 +89,69 @@ def up(
             "--skip-pin-check", help="Build whatever commit the checkout is at. Recorded."
         ),
     ] = False,
+    reset_llm_profiles: Annotated[
+        bool,
+        typer.Option(
+            "--reset-llm-profiles",
+            help="Delete saved LLM profiles that shadow the collector (they bypass capture).",
+        ),
+    ] = False,
 ) -> None:
-    # Pin verification runs before anything is built: a drifted checkout must
-    # fail loudly, not silently change the agent under the benchmark.
+    from artex_gym import stack
+    from artex_gym import up as up_mod
+
     if not skip_pin_check:
         try:
             _check_pin(artex_source)
         except PinError as exc:
             typer.secho(str(exc), fg=typer.colors.RED, err=True)
             raise typer.Exit(PIN_MISMATCH_STATUS) from exc
-    _todo("up", "M1")
+    try:
+        summary = up_mod.bring_up(artex_source, detach, skip_pin_check, reset_llm_profiles)
+    except (stack.StackError, ArtexError) as exc:
+        typer.secho(str(exc), fg=typer.colors.RED, err=True)
+        raise typer.Exit(STACK_FAILED_STATUS) from exc
+    _print_up_summary(summary)
 
 
 @app.command(help="Tear down the stack. Keeps the data volumes unless --volumes. [M1]")
 def down(
     volumes: Annotated[bool, typer.Option(help="Also delete Postgres and blob volumes.")] = False,
 ) -> None:
-    _todo("down", "M1")
+    from artex_gym import stack
+    from artex_gym import up as up_mod
+
+    try:
+        up_mod.teardown(volumes)
+    except stack.StackError as exc:
+        typer.secho(str(exc), fg=typer.colors.RED, err=True)
+        raise typer.Exit(STACK_FAILED_STATUS) from exc
+    typer.secho("stack down" + (" (volumes removed)" if volumes else ""), fg=typer.colors.GREEN)
+
+
+def _print_up_summary(summary: dict) -> None:
+    rows = [
+        ("ARTEX commit", summary["artex_git_sha"][:12]),
+        ("ARTEX image", summary["artex_image_digest"] or "(built from source)"),
+        ("isolation", summary["isolation"]),
+        ("capture", f"traffic_capture={summary['traffic_capture']}"),
+        ("LLM base URL", summary["llm_base_url"]),
+        ("run id", summary["run_id"]),
+        ("blob dir", summary["blob_dir"]),
+        ("collector", summary["collector"]),
+        ("ARTEX API", summary["artex"]),
+        ("login", f"{summary['username']} / {summary['password']}"),
+    ]
+    typer.secho("stack up", fg=typer.colors.GREEN)
+    for label, value in rows:
+        typer.echo(f"  {label:<14} {value}")
+    typer.echo()
+    typer.echo("  next: capture one call end-to-end")
+    typer.echo(
+        "    curl -sN localhost:4000/v1/chat/completions -H 'content-type: application/json' \\"
+    )
+    typer.echo("      -H 'authorization: Bearer ${ARTEX_GYM_COLLECTOR_TOKEN}' \\")
+    typer.echo("      -d @fixtures/chat_request.json")
 
 
 # ----------------------------------------------------------------------- run

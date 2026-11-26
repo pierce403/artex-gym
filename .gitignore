@@ -4,10 +4,13 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.pytest_cache/
+.ruff_cache/
 
 # Runtime artifacts: never committed.
 .env
 data/
+keys/
 runs/
 artifacts/
 *.jsonl
@@ -15,5 +18,3 @@ artifacts/
 
 # ARTEX checkout used for provisioning is referenced by path, never copied in.
 compose/.build/
-.pytest_cache/
-.ruff_cache/

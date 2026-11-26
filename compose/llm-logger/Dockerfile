@@ -13,7 +13,10 @@ ENV UV_COMPILE_BYTECODE=1 \
 
 WORKDIR /app
 
-COPY pyproject.toml uv.lock ./
+# README.md is listed in pyproject.toml as the long description, and hatchling
+# resolves it while building the project — so it must be present before the
+# first sync, not just before the source copy.
+COPY pyproject.toml uv.lock README.md ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --extra collector --no-install-project
 
