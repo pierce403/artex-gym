@@ -24,3 +24,7 @@ artifacts/
 
 # ARTEX checkout used for provisioning is referenced by path, never copied in.
 compose/.build/
+
+# Local scratch: vendored reference sources and ad-hoc probe payloads.
+# Not shipped, but kept in-tree so nothing lives in /tmp and disappears.
+.work/

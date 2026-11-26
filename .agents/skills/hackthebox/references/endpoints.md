@@ -7,6 +7,9 @@ not publicly reachable (checked 2026-11-26: `/api/v4/docs`, `/openapi.json`,
 `api-documentation` repos all 404). So this file separates what was probed live
 from what was inferred.
 
+> Reference checkout: `.work/vendor/htb-cli` (run `scripts/vendor.sh`), at
+> commit `35a970d`. Paths below are quoted from it, not from memory.
+
 ## Route existence — probed live 2026-11-26 (no token)
 
 Method: `curl -H 'Accept: application/json'`, then read 401/405/404.
@@ -24,6 +27,9 @@ Method: `curl -H 'Accept: application/json'`, then read 401/405/404.
 | `/machine/submit` | 405 | 401 | exists, POST only |
 | `/challenge/list` | 401 | — | exists, GET |
 | `/machine/list` | 404 | 404 | **does not exist** |
+| `/machine/paginated/` (trailing slash) | 401 | — | exists; the bare path 404s on some hosts |
+| `/machine/list/retired/paginated/` | 401 | — | exists, retired catalogue |
+| `/machine/unreleased/` | 404 | — | not on labs; `htb-cli` cites it |
 | `/machine/own` | 404 | 404 | not as a bare path — see below |
 | `/machine/own/{id}` | 404 | 404 | does not exist |
 | `/machine/{id}` | 404 | 404 | does not exist |
@@ -32,6 +38,18 @@ Method: `curl -H 'Accept: application/json'`, then read 401/405/404.
 | `/machine/extend`, `/machine/reset`, `/machine/todo`, `/machine/rank` | 404 | 404 | do not exist |
 | `/user/api_token`, `/user/refresh`, `/user/logout` | 404 | — | do not exist |
 | `/vpn/status`, `/connections`, `/access` | 404 | — | do not exist as bare paths |
+
+## List routes, corrected from the reference client
+
+The catalogue routes need a **trailing slash and a query**, which is why the
+first probe pass reported them missing:
+
+```
+GET /machine/paginated/?per_page=100                    # active + retired, mixed
+GET /machine/list/retired/paginated/?per_page=100&sort_by=release-date
+```
+
+Source: `.work/vendor/htb-cli/cmd/machines.go` (`machineURL`, `retiredURL`).
 
 ## Contradiction to resolve with a live token
 
@@ -77,8 +95,35 @@ Run each once and paste the real status + a truncated body:
 - [ ] `GET /search/fetch?query=Lame` — response shape for name→id
 - [ ] rate-limit headers on a burst (`X-RateLimit-*`? `Retry-After`?)
 
+## List payload fields (from `cmd/machines.go`)
+
+The list response array is read by `htb-cli` as `data`, with per-machine keys:
+
+| field | use |
+|---|---|
+| `id` | numeric machine id, the stable key |
+| `name` | display name |
+| `os` | `Linux` / `Windows` |
+| `difficultyText` | `Easy` / `Medium` / `Hard` / `Insane` (list) |
+| `difficulty` | same idea on `machine/profile/{id}` |
+| `points` | difficulty proxy; lower = easier |
+| `release` | RFC3339 timestamp |
+| `star` | star count |
+| `retired` | retired flag |
+| `authUserInUserOwns` | bool, nullable — user flag owned |
+| `authUserInRootOwns` | bool, nullable — root flag owned |
+
+Note the two spellings: `difficultyText` (camelCase) in list payloads vs
+`difficulty` in a profile. Code that assumes one will silently match nothing.
+
 ## Notes on this project's use
 
 - Free tier = 1 active machine; all spawns go through a single-slot queue.
 - `expires_at` is the deadline for a run; exceeding it is `timeout`.
 - Machine `id` is numeric and stable; `name` is not unique enough to key on.
+- "Unsolved" = `authUserInUserOwns` **and** `authUserInRootOwns` both false.
+  A box where user is owned but not root is still worth training on (the run is
+  a partial-success label), so it is reported, not silently dropped.
+- Retired easy boxes are the default training target, but retired boxes have
+  public writeups: a model that memorised them scores higher than its skill
+  warrants. Record `retired` on the dataset row so an eval can split on it.

@@ -38,7 +38,8 @@ payload shape.
 
 ### Enumerate / search
 
-    GET  /machine/paginated?page=1&per_page=50     # the machine catalogue
+    GET  /machine/paginated/?per_page=100          # catalogue (trailing slash!)
+    GET  /machine/list/retired/paginated/?per_page=100&sort_by=release-date
     GET  /machine/profile/{id}                     # one machine by numeric id
     GET  /machine/active                           # currently spawned machine
     GET  /season/machine/active                    # season-active machine
@@ -49,8 +50,10 @@ payload shape.
     GET  /access/ovpnfile/{id}/0                   # download .ovpn
     GET  /challenge/list                           # challenges (not machines)
 
-**`GET /machine/list` does not exist** (404). It is the most commonly guessed
-wrong path; the catalogue is `/machine/paginated`.
+**`GET /machine/list` does not exist** (404) — but
+`/machine/list/retired/paginated/` does. The catalogue routes need a trailing
+slash; without it some hosts 404, which reads as "wrong endpoint" when the only
+problem is the missing slash.
 
 Name → id needs `/search/fetch`; profiles are keyed by numeric id only.
 
@@ -115,10 +118,24 @@ spawn attempts on free tier produce confusing errors, not a queue.
     curl -s -H "Accept: application/json" -H "Authorization: Bearer $HTB_TOKEN" \
       https://labs.hackthebox.com/api/v4/machine/profile/1 | jq .
 
+## Local evidence, not /tmp
+
+Two places, both in-tree, both gitignored:
+
+    .work/vendor/htb-cli     # the reference client (scripts/vendor.sh)
+    .work/probes/             # ad-hoc request payloads used while probing
+
+`references/endpoints.md` cites line-level paths into the vendored checkout, so
+a claim can be re-read instead of trusted. Re-vendor with `scripts/vendor.sh
+--update` and diff the reference file if the API moved.
+
 ## Scripts
 
     scripts/htb.py active
+    scripts/htb.py easy                       # easiest unowned (the default question)
+    scripts/htb.py easy --limit 3 --source retired
     scripts/htb.py list --page 1 --per-page 50
+    scripts/htb.py list --retired --sort-by release-date
     scripts/htb.py find Lame
     scripts/htb.py profile 1
     scripts/htb.py spawn 1        # terminates the current machine first

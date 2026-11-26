@@ -1,0 +1,12 @@
+{
+  "model": "test-model",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Count: one two three"
+    }
+  ],
+  "max_tokens": 24,
+  "temperature": 0,
+  "stream": true
+}

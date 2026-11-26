@@ -149,7 +149,84 @@ def cmd_active(_args) -> dict:
 
 
 def cmd_list(args) -> dict:
-    return call("GET", f"/machine/paginated?page={args.page}&per_page={args.per_page}")
+    """Active/all machines. Trailing slash and query are required by the route."""
+    if args.retired:
+        path = f"/machine/list/retired/paginated/?page={args.page}&per_page={args.per_page}"
+        if args.sort_by:
+            path += f"&sort_by={args.sort_by}"
+    else:
+        path = f"/machine/paginated/?page={args.page}&per_page={args.per_page}"
+    return call("GET", path)
+
+
+def _machines(payload: dict) -> list[dict]:
+    """The list payload's machine array.
+
+    `data` is the documented-in-practice key (htb-cli parses "data"). Pagination
+    metadata sits alongside it; fall back to top-level lists so a shape change
+    degrades to something printable instead of a crash.
+    """
+    for key in ("data", "machines", "info"):
+        value = payload.get(key)
+        if isinstance(value, list):
+            return value
+    return []
+
+
+def _is_easy(machine: dict) -> bool:
+    # The list uses difficultyText ("Easy"); the profile uses difficulty.
+    for key in ("difficultyText", "difficulty_text", "difficulty"):
+        value = machine.get(key)
+        if isinstance(value, str) and value.strip().lower() == "easy":
+            return True
+        if isinstance(value, int) and value == 20:  # some payloads use points
+            return True
+    return False
+
+
+def _owned(machine: dict) -> bool:
+    """True when the user already owns user and/or root, per the list payload."""
+    return bool(machine.get("authUserInUserOwns") or machine.get("authUserInRootOwns"))
+
+
+def cmd_easy(args) -> dict:
+    """Easiest unowned machines. Retired first, because that is what a benchmark wants."""
+    rows: list[dict] = []
+    errors: list[str] = []
+    for label, path in (
+        ("retired", "/machine/list/retired/paginated/?per_page=100&sort_by=release-date"),
+        ("active", "/machine/paginated/?per_page=100"),
+    ):
+        if args.source not in ("both", label):
+            continue
+        try:
+            payload = call("GET", path)
+        except HtbError as exc:
+            errors.append(f"{label}: {exc}")
+            print(f"  ({label}: {exc})", file=sys.stderr)
+            continue
+        for machine in _machines(payload):
+            if _is_easy(machine) and not _owned(machine):
+                rows.append({**machine, "_source": label})
+
+    # Least points first: the proxy HTB uses for "how easy".
+    rows.sort(key=lambda m: (m.get("points") or 0, m.get("name") or ""))
+    shown = rows[: args.limit]
+    if not shown:
+        # Both sources failing is not "no machines" — it is a broken call, and
+        # reporting it as an empty catalogue hides the real cause.
+        if errors and len(errors) == (2 if args.source == "both" else 1):
+            raise HtbError(errors[0])
+        print("no easy unowned machines found")
+        return {"machines": []}
+    print(f"{'id':>5}  {'name':<18} {'os':<8} {'pts':>4}  {'retired':<7} source")
+    for m in shown:
+        print(
+            f"{m.get('id', '?'):>5}  {str(m.get('name', '?'))[:18]:<18} "
+            f"{str(m.get('os', '?'))[:8]:<8} {str(m.get('points', '?')):>4}  "
+            f"{str(bool(m.get('retired'))):<7} {m['_source']}"
+        )
+    return {"machines": shown}
 
 
 def cmd_find(args) -> dict:
@@ -239,7 +316,16 @@ def main(argv: list[str]) -> int:
     sub.add_parser("stop").set_defaults(fn=cmd_stop)
     sub.add_parser("vpn").set_defaults(fn=cmd_vpn)
 
+    easy = sub.add_parser("easy", help="easiest unowned machines")
+    easy.add_argument("--limit", type=int, default=10)
+    easy.add_argument(
+        "--source", choices=["retired", "active", "both"], default="both"
+    )
+    easy.set_defaults(fn=cmd_easy)
+
     lst = sub.add_parser("list")
+    lst.add_argument("--retired", action="store_true", help="retired catalogue instead")
+    lst.add_argument("--sort-by", dest="sort_by", default="")
     lst.add_argument("--page", type=int, default=1)
     lst.add_argument("--per-page", type=int, default=50, dest="per_page")
     lst.set_defaults(fn=cmd_list)
