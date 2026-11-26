@@ -757,11 +757,11 @@
    "id": 5,
    "ip": null,
    "name": "Beep",
-   "note": "",
+   "note": "error: spawn issued but no IP appeared within 120s; check the HTB UI and the VPN",
    "os": "Linux",
    "retired": true,
    "slug": "beep-5",
-   "state": "pending",
+   "state": "skipped:no-spawn",
    "task_id": null,
    "tier": "Easy"
   },
@@ -1276,18 +1276,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 38,
    "free": false,
    "id": 672,
-   "ip": null,
+   "ip": "10.129.138.7",
    "name": "Outbound",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "outbound-672",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "78",
    "tier": "Easy"
   },
   {
