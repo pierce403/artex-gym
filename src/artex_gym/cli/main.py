@@ -135,6 +135,12 @@ def _print_up_summary(summary: dict) -> None:
         ("ARTEX image", summary["artex_image_digest"] or "(built from source)"),
         ("isolation", summary["isolation"]),
         ("capture", f"traffic_capture={summary['traffic_capture']}"),
+        ("workers", str(summary.get("workers", "?"))),
+        (
+            "planner",
+            f"v{summary.get('planner_prompt_version')}"
+            + (" (breadth raised)" if summary.get("planner_breadth_raised") else ""),
+        ),
         ("LLM base URL", summary["llm_base_url"]),
         ("run id", summary["run_id"]),
         ("blob dir", summary["blob_dir"]),

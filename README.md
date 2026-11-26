@@ -22,6 +22,13 @@ starts ARTEX + `llm-logger` + Postgres, authenticates, turns capture on, and
 Calls with `curl` through `localhost:4000/v1/chat/completions` produce
 immutable gzipped blobs under `data/llm-blobs/{run_id}/`.
 
+`up` also tunes the stack for benchmark work — see `adr/0003-parallelism.md`:
+`workers=8`, and the planner's intent-batch cap raised from 4 to 8 with the
+ideal route count 2–3 → 4–6. Both are idempotent and the prompt edit is
+reversible (`POST /api/agents/planner/prompt/reset`). HTB allows **one** active
+box per account, so parallelism comes from breadth on one box, not from more
+boxes.
+
 See `notes/report.md` for a real run: four HackTheBox machines driven to
 HTB-accepted flags with ARTeX, with capture held at 0 drops throughout, plus the
 per-box write-ups in `notes/{cap,expressway,orion,dutybound}/`.

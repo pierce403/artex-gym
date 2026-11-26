@@ -140,7 +140,16 @@ mid-run. Check it before long runs, and treat a mid-run death as
 `timeout`/`crashed`, not as a failed attempt.
 
 Serialize every spawn through a single-slot queue with backoff. Concurrent
-spawn attempts on free tier produce confusing errors, not a queue.
+spawn attempts produce confusing errors, not a queue — and this is **not** a
+free-tier limitation: a `dedivip` account is refused identically
+(`403 "You already have an active instance"`), and there is no plural endpoint
+(`/api/v5/virtual_machine/active` returns one object, not a list).
+
+**The box is the bottleneck, so breadth has to come from elsewhere.** The real
+limit is planner breadth, not worker count: the planner prompt caps a round at a
+few intents, so extra workers sit idle (measured: Cap got 2 intents, Expressway
+3, Orion 4, with 3 workers each). `artexctl up` raises both — see
+`adr/0003-parallelism.md`.
 
 ## Enumerate → pick → spawn
 

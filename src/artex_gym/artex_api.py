@@ -90,6 +90,32 @@ class ArtexClient:
         if resp.status_code != 200:
             raise ArtexError(f"settings update failed ({resp.status_code}): {resp.text}")
 
+    def agent(self, key: str) -> dict:
+        resp = httpx.get(f"{self.base_url}/api/agents/{key}", headers=self._headers(), timeout=10)
+        resp.raise_for_status()
+        return resp.json()
+
+    def save_agent_prompt(self, key: str, template: str, note: str) -> int:
+        """Save a new prompt version. Reversible with reset_agent_prompt."""
+        resp = httpx.put(
+            f"{self.base_url}/api/agents/{key}/prompt",
+            json={"Template": template, "Note": note},
+            headers=self._headers(),
+            timeout=20,
+        )
+        if resp.status_code != 200:
+            raise ArtexError(f"save prompt failed ({resp.status_code}): {resp.text}")
+        return int(resp.json()["version"])
+
+    def reset_agent_prompt(self, key: str) -> None:
+        resp = httpx.post(
+            f"{self.base_url}/api/agents/{key}/prompt/reset",
+            headers=self._headers(),
+            timeout=20,
+        )
+        if resp.status_code != 200:
+            raise ArtexError(f"reset prompt failed ({resp.status_code}): {resp.text}")
+
     def llm(self) -> dict:
         resp = httpx.get(f"{self.base_url}/api/llm", headers=self._headers(), timeout=10)
         resp.raise_for_status()

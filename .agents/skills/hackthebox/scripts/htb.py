@@ -290,8 +290,7 @@ def cmd_spawn(args) -> dict:
             print(f"machine {args.id} is already active at {current.get('ip')}")
             return current
         print(
-            f"terminating id={current.get('id')} {current.get('name')!r} "
-            "to free the free-tier slot"
+            f"terminating id={current.get('id')} {current.get('name')!r} to free the free-tier slot"
         )
         call("POST", "/vm/terminate", {"machine_id": current.get("id")})
         # Wait for the slot to actually free; spawning immediately after a
@@ -311,8 +310,7 @@ def cmd_spawn(args) -> dict:
         info = call("GET", "/machine/active").get("info")
         if info and info.get("ip"):
             print(
-                f"up: id={info.get('id')} ip={info.get('ip')} "
-                f"expires_at={info.get('expires_at')}"
+                f"up: id={info.get('id')} ip={info.get('ip')} expires_at={info.get('expires_at')}"
             )
             return info
     raise HtbError("spawn issued but no IP appeared within 120s; check the HTB UI and the VPN")
@@ -364,9 +362,7 @@ def main(argv: list[str]) -> int:
 
     easy = sub.add_parser("easy", help="easiest unowned machines")
     easy.add_argument("--limit", type=int, default=10)
-    easy.add_argument(
-        "--source", choices=["retired", "active", "both"], default="both"
-    )
+    easy.add_argument("--source", choices=["retired", "active", "both"], default="both")
     easy.set_defaults(fn=cmd_easy)
 
     lst = sub.add_parser("list")

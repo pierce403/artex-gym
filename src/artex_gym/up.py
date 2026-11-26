@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from artex_gym import artex_api, stack
+from artex_gym import artex_api, stack, tune
 from artex_gym.artex_api import ArtexClient
 from artex_gym.pin import ArtexPin, verify
 
@@ -117,6 +117,10 @@ def bring_up(
     if not settings.get("traffic_capture"):
         raise stack.StackError("traffic_capture did not stick after PUT /api/settings")
 
+    # Benchmark tuning: worker count plus the planner's intent-batch cap. The
+    # cap is the real limit on parallelism (see tune.py); both are idempotent.
+    tuning = tune.apply(client)
+
     effective = client.llm()
     expected = stack.env_or_file(env, "ARTEX_GYM_BASE_URL", DEFAULT_UPSTREAM)
     if (effective.get("base_url") or "").rstrip("/") != expected.rstrip("/"):
@@ -134,6 +138,9 @@ def bring_up(
         "isolation": isolation,
         "traffic_capture": settings.get("traffic_capture"),
         "llm_base_url": expected,
+        "workers": tuning.workers,
+        "planner_prompt_version": tuning.prompt_version,
+        "planner_breadth_raised": tuning.prompt_changed,
     }
 
 
