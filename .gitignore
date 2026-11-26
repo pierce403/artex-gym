@@ -11,6 +11,12 @@ build/
 .env
 data/
 keys/
+
+# Credentials. Never committed, and not by exact filename only: any local
+# *.token / secret-looking drop should stay out.
+htb.txt
+*.token
+.secrets/
 runs/
 artifacts/
 *.jsonl

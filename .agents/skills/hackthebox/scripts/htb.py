@@ -31,6 +31,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from pathlib import Path
 
 BASE = "https://labs.hackthebox.com/api/v4"
 UA = "artex-gym-htb/0.1"
@@ -41,13 +42,60 @@ class HtbError(RuntimeError):
 
 
 def token() -> str:
+    """The app token: $HTB_TOKEN, else $HTB_TOKEN_FILE, else ./htb.txt.
+
+    A file is read and whitespace-stripped, because a pasted token usually
+    carries a trailing newline and often a literal "..." from a truncated copy.
+    Validated here so a bad token fails with a readable reason instead of a
+    generic 401 that looks like a permissions problem.
+    """
     tok = os.environ.get("HTB_TOKEN", "").strip()
+    source = "$HTB_TOKEN"
+    if not tok:
+        path = os.environ.get("HTB_TOKEN_FILE", "").strip()
+        if not path and os.path.isfile("htb.txt"):
+            path = "htb.txt"
+        if path:
+            try:
+                tok = "".join(Path(path).read_text().split())
+                source = path
+            except OSError as exc:
+                raise HtbError(f"cannot read token file {path}: {exc}") from None
     if not tok:
         raise HtbError(
-            "HTB_TOKEN is not set "
+            "no token: set HTB_TOKEN, or put the app token in htb.txt "
             "(app.hackthebox.com -> profile -> Settings -> App Tokens)"
         )
+    validate_token(tok, source)
     return tok
+
+
+def validate_token(tok: str, source: str) -> None:
+    """Reject a token that clearly cannot work, naming why.
+
+    Three checks, each of which has a distinct real cause:
+      - a literal "...": copied from a UI that truncated the display
+      - wrong segment count: not a JWT at all (a password, or a cookie)
+      - a short signature: complete-looking but cut off
+    """
+    if tok.endswith("..."):
+        raise HtbError(
+            f"token from {source} is truncated (ends with '...'). "
+            "Copy the full value — the UI truncates long tokens on screen."
+        )
+    parts = tok.split(".")
+    if len(parts) != 3:
+        raise HtbError(
+            f"token from {source} is not a JWT ({len(parts)} segments, expected 3). "
+            "An app token is a long eyJ... string, not a password or a cookie."
+        )
+    # Base64url of a 256-byte RS256 signature is ~342 chars. Anything much
+    # shorter means the copy stopped early.
+    if len(parts[2]) < 300:
+        raise HtbError(
+            f"token from {source} looks truncated: signature is {len(parts[2])} chars, "
+            "expected ~342 for RS256. Copy the whole token again."
+        )
 
 
 def call(method: str, path: str, body: dict | None = None, *, retry_429: bool = True) -> dict:
