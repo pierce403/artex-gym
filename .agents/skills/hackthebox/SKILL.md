@@ -159,8 +159,14 @@ The API rate-limits but does not publish numbers. Treat these as hard rules:
 
 ## Gotchas
 
-- **Difficulty tiers** are `easy`/`medium`/`hard`/`insane` in the UI, but the
-  API returns them as strings on the profile — do not assume an enum of ints.
+- **`profile/{id}.ip` is the ACTIVE machine's IP**, not the profile's. Three
+  different profiles returned the same IP. Use `playInfo.isActive` to decide
+  whether the machine you asked about is the spawned one.
+- **`points` is 0 on retired machines**; `static_points` is the score and
+  `difficulty` (0-100) orders them. `difficultyText` is the label.
+- **No `retired` key in list rows** — retired means `active` is `null`.
+- **Difficulty tiers** are `easy`/`medium`/`hard`/`insane` in the UI; the list
+  gives `difficultyText` (string) *and* `difficulty` (int). Never assume one.
 - **Retired vs active**: retired machines are still in `/machine/paginated`;
   keeping them out of a training split set is a filtering concern, not an API one.
 - **Release arena** machines take `/arena/own`, not `/machine/own`. Submitting

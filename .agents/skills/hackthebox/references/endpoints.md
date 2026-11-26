@@ -95,6 +95,41 @@ Run each once and paste the real status + a truncated body:
 - [ ] `GET /search/fetch?query=Lame` — response shape for name→id
 - [ ] rate-limit headers on a burst (`X-RateLimit-*`? `Retry-After`?)
 
+## Verified against the live API, 2026-11-26 (real token)
+
+Three things the reference client's field list did **not** tell us:
+
+1. **`profile/{id}.ip` is a lie.** It returns the IP of whichever machine is
+   spawned *right now*, not the machine you asked about. Profiles 351 (Cap),
+   692 (CodePartTwo) and 999 (DutyBound) all returned `10.129.137.83`; only 999
+   was actually running. The per-machine truth is `playInfo`:
+
+   ```
+   playInfo.isActive / isSpawned  -> is THIS machine the spawned one
+   playInfo.expires_at             -> when it dies
+   ```
+
+   Never read `ip` off a profile without checking `playInfo` first.
+
+2. **`points` is 0 on every retired machine.** It is not a difficulty proxy.
+   `static_points` (20/30/40) is the score. Use `difficulty` (0-100, lower is
+   easier) to order, and `difficultyText` to filter.
+
+3. **There is no `retired` key in list payloads.** A machine is retired when
+   `active` is `null`. Profiles *do* carry `retired`.
+
+Actual list row (trimmed, `GET /machine/list/retired/paginated/`):
+
+```json
+{"id":351,"name":"Cap","os":"Linux","static_points":20,"points":0,
+ "difficulty":28,"difficultyText":"Easy","star":4.6,"free":true,
+ "authUserInUserOwns":false,"authUserInRootOwns":false,
+ "active":null,"playInfo":{"isActive":null,"expires_at":null}}
+```
+
+Sample size for the counts below: 300 retired machines across 3 pages ->
+89 Easy, 88 Easy+unowned, 1 owned by this account (Titanic).
+
 ## List payload fields (from `cmd/machines.go`)
 
 The list response array is read by `htb-cli` as `data`, with per-machine keys:
@@ -106,7 +141,11 @@ The list response array is read by `htb-cli` as `data`, with per-machine keys:
 | `os` | `Linux` / `Windows` |
 | `difficultyText` | `Easy` / `Medium` / `Hard` / `Insane` (list) |
 | `difficulty` | same idea on `machine/profile/{id}` |
-| `points` | difficulty proxy; lower = easier |
+| `points` | **0 on retired machines** — not usable for ordering |
+| `static_points` | the score: 20/30/40/50 by tier |
+| `difficulty` | 0-100 numeric score; lower is easier |
+| `active` | non-null only for the current season's machines |
+| `free` | playable without a subscription |
 | `release` | RFC3339 timestamp |
 | `star` | star count |
 | `retired` | retired flag |

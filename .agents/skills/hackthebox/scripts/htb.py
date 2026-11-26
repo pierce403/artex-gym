@@ -174,19 +174,28 @@ def _machines(payload: dict) -> list[dict]:
 
 
 def _is_easy(machine: dict) -> bool:
-    # The list uses difficultyText ("Easy"); the profile uses difficulty.
-    for key in ("difficultyText", "difficulty_text", "difficulty"):
-        value = machine.get(key)
-        if isinstance(value, str) and value.strip().lower() == "easy":
-            return True
-        if isinstance(value, int) and value == 20:  # some payloads use points
-            return True
-    return False
+    """Easy per the list payload.
+
+    `difficultyText` is the human label; `difficulty` is a 0-100 numeric score
+    where lower is easier (Cap=28, DoubleTake=36, all labelled "Easy"). `points`
+    is 0 on every retired machine, so it is useless as a difficulty proxy even
+    though it looks like one.
+    """
+    text = machine.get("difficultyText") or machine.get("difficulty_text")
+    if isinstance(text, str):
+        return text.strip().lower() == "easy"
+    score = machine.get("difficulty")
+    return isinstance(score, int) and score <= 40
 
 
 def _owned(machine: dict) -> bool:
     """True when the user already owns user and/or root, per the list payload."""
     return bool(machine.get("authUserInUserOwns") or machine.get("authUserInRootOwns"))
+
+
+def _retired(machine: dict) -> bool:
+    """There is no `retired` key: a machine is retired when `active` is null."""
+    return machine.get("active") is None
 
 
 def cmd_easy(args) -> dict:
@@ -209,8 +218,9 @@ def cmd_easy(args) -> dict:
             if _is_easy(machine) and not _owned(machine):
                 rows.append({**machine, "_source": label})
 
-    # Least points first: the proxy HTB uses for "how easy".
-    rows.sort(key=lambda m: (m.get("points") or 0, m.get("name") or ""))
+    # The numeric difficulty score orders them honestly; `points` is 0 on all
+    # retired machines and would make the order alphabetical by accident.
+    rows.sort(key=lambda m: (m.get("difficulty") or 0, m.get("name") or ""))
     shown = rows[: args.limit]
     if not shown:
         # Both sources failing is not "no machines" — it is a broken call, and
@@ -219,12 +229,16 @@ def cmd_easy(args) -> dict:
             raise HtbError(errors[0])
         print("no easy unowned machines found")
         return {"machines": []}
-    print(f"{'id':>5}  {'name':<18} {'os':<8} {'pts':>4}  {'retired':<7} source")
+    print(
+        f"{'id':>5}  {'name':<18} {'os':<8} {'diff':>4} {'pts':>4}  "
+        f"{'retired':<7} {'free':<5} source"
+    )
     for m in shown:
         print(
             f"{m.get('id', '?'):>5}  {str(m.get('name', '?'))[:18]:<18} "
-            f"{str(m.get('os', '?'))[:8]:<8} {str(m.get('points', '?')):>4}  "
-            f"{str(bool(m.get('retired'))):<7} {m['_source']}"
+            f"{str(m.get('os', '?'))[:8]:<8} {str(m.get('difficulty', '?')):>4} "
+            f"{str(m.get('static_points', '?')):>4}  "
+            f"{str(_retired(m)):<7} {str(bool(m.get('free'))):<5} {m['_source']}"
         )
     return {"machines": shown}
 
@@ -234,16 +248,28 @@ def cmd_find(args) -> dict:
     data = call("GET", f"/search/fetch?query={q}")
     # The response shape is not documented; show what came back rather than
     # guessing at a key name.
-    print(json.dumps(data, indent=2)[:4000])
+    print(json.dumps(data, indent=2))
     return data
 
 
 def cmd_profile(args) -> dict:
     data = call("GET", f"/machine/profile/{args.id}")
     info = data.get("info", data)
-    for key in ("id", "name", "os", "difficulty", "points", "retired", "ip"):
+    play = info.get("playInfo") or {}
+    for key in ("id", "name", "os", "difficulty", "difficultyText", "points", "active", "retired"):
         if key in info:
-            print(f"{key:12} {info[key]}")
+            print(f"{key:14} {info[key]}")
+
+    # TRAP: `ip` on a profile is the IP of whatever machine is spawned right now,
+    # not of the machine you asked about. Verified 2026-11-26: profiles 351, 692
+    # and 999 all returned 10.129.137.83. Trust playInfo, never `ip`.
+    spawned = bool(play.get("isActive") or play.get("isSpawned"))
+    print(f"{'spawned':14} {spawned}")
+    if spawned:
+        print(f"{'ip':14} {info.get('ip')}  (this machine is the active one)")
+        print(f"{'expires_at':14} {play.get('expires_at')}")
+    else:
+        print(f"{'ip':14} —  (not spawned; profile.ip is the ACTIVE machine's, ignore it)")
     return data
 
 
@@ -358,7 +384,9 @@ def main(argv: list[str]) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
     if isinstance(result, dict) and args.cmd in {"list", "reset", "own", "vpn", "stop"}:
-        print(json.dumps(result, indent=2)[:4000])
+        # Full payload, not a truncated prefix: piping this into another tool must
+        # not produce unparseable JSON.
+        print(json.dumps(result, indent=2))
     return 0
 
 
