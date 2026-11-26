@@ -451,18 +451,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 537,
-   "ip": null,
+   "ip": "10.129.228.217",
    "name": "Busqueda",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "busqueda-537",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "30",
    "tier": "Easy"
   },
   {
