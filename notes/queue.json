@@ -331,18 +331,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 692,
-   "ip": null,
+   "ip": "10.129.137.136",
    "name": "CodePartTwo",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "codeparttwo-692",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "23",
    "tier": "Easy"
   },
   {
