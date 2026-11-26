@@ -691,18 +691,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 34,
    "free": false,
    "id": 613,
-   "ip": null,
+   "ip": "10.129.137.176",
    "name": "PermX",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "permx-613",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "46",
    "tier": "Easy"
   },
   {
