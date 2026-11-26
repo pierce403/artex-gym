@@ -601,18 +601,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 34,
    "free": false,
    "id": 3,
-   "ip": null,
+   "ip": "10.129.137.168",
    "name": "Devel",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "devel-3",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "40",
    "tier": "Easy"
   },
   {
