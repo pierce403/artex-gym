@@ -391,18 +391,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 594,
-   "ip": null,
+   "ip": "10.129.137.144",
    "name": "Headless",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "headless-594",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "26",
    "tier": "Easy"
   },
   {
