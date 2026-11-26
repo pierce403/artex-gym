@@ -4,29 +4,29 @@ Generated from `notes/queue.json` (543 retired boxes) and `.work/logs/queue-run.
 
 ## Totals
 
-- solved **47**
+- solved **48**
 - timeout 3
 - skipped (no spawn) 3
-- partial (user only) 1
-- pending 489
+- partial (user only) 2
+- pending 487
 
 ## By tier
 
 | tier | solved | timeout | skipped | partial | pending |
 |---|---|---|---|---|---|
-| Easy | 47 | 3 | 3 | 1 | 106 |
+| Easy | 48 | 3 | 3 | 2 | 104 |
 | Medium | 0 | 0 | 0 | 0 | 193 |
 | Hard | 0 | 0 | 0 | 0 | 122 |
 | Insane | 0 | 0 | 0 | 0 | 68 |
 
 ## Speed (solved boxes only)
 
-- n = 40
-- median 11.3 min
+- n = 41
+- median 11.5 min
 - p90 21.3 min
 - max 22.1 min
-- took >12 min: 18 of 40
-- time spent on non-solves: 92 min across 7 boxes
+- took >12 min: 19 of 41
+- time spent on non-solves: 113 min across 8 boxes
 
 ## Not solved
 
@@ -39,3 +39,4 @@ Generated from `notes/queue.json` (543 retired boxes) and `.work/logs/queue-run.
 | 617 | GreenHorn | Easy | partial:user-only | timeout after 20m |
 | 111 | Sense | Easy | skipped:no-spawn | error: spawn issued but no IP appeared within 120s; check th |
 | 5 | Beep | Easy | skipped:no-spawn | error: spawn issued but no IP appeared within 120s; check th |
+| 356 | Explore | Easy | partial:user-only | timeout after 20m |
