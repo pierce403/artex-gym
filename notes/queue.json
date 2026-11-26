@@ -706,18 +706,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 34,
    "free": false,
    "id": 660,
-   "ip": null,
+   "ip": "10.129.237.241",
    "name": "Planning",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "planning-660",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "47",
    "tier": "Easy"
   },
   {
