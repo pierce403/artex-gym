@@ -1117,11 +1117,11 @@
    "id": 414,
    "ip": "10.129.95.252",
    "name": "Nunchucks",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "nunchucks-414",
-   "state": "pending",
+   "state": "solved",
    "task_id": "69",
    "tier": "Easy"
   },
