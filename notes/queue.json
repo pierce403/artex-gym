@@ -832,11 +832,11 @@
    "id": 856,
    "ip": "10.129.245.50",
    "name": "Kobold",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "kobold-856",
-   "state": "pending",
+   "state": "solved",
    "task_id": "52",
    "tier": "Easy"
   },
