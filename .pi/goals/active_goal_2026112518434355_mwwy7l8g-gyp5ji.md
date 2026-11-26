@@ -5,19 +5,19 @@
   "status": "active",
   "autoContinue": true,
   "usage": {
-    "tokensUsed": 28176,
-    "activeSeconds": 155
+    "tokensUsed": 207413,
+    "activeSeconds": 1988
   },
   "sisyphus": false,
   "createdAt": "2026-11-26T02:43:43.552Z",
-  "updatedAt": "2026-11-26T02:46:34.936Z",
+  "updatedAt": "2026-11-26T03:18:34.947Z",
   "activePath": ".pi/goals/active_goal_2026112518434355_mwwy7l8g-gyp5ji.md",
-  "revision": 30,
+  "revision": 175,
   "scheduler": {
     "version": 1,
     "owner": "01a21569-d72f-7448-bf24-aeb1cf6509fe",
-    "generation": "da8eb4ed-12da-436a-8027-a4db121d63e1",
-    "used": 1,
+    "generation": "0ff5c14e-4faa-449f-9d2a-e122ab43440e",
+    "used": 2,
     "phase": "running",
     "repairUsed": false,
     "decision": {
@@ -25,9 +25,9 @@
       "purpose": "ready"
     },
     "dispatch": {
-      "id": "db77d6b4-9b76-4352-bb1c-1f79d29f0bfe",
+      "id": "0d0eeb03-6122-4f4e-9ba1-844c40afbd8e",
       "kind": "ready",
-      "claimedAt": 1795661023599
+      "claimedAt": 1795661513203
     }
   },
   "taskList": {
@@ -35,32 +35,42 @@
       {
         "id": "t1-repair-own",
         "title": "Repair htb.py flag submission: replace the dead /machine/own with /machine/submit and its hash fields",
-        "status": "pending",
-        "verificationContract": "A live call with a real flag either succeeds or returns a field-level error naming what is missing; the 404 is gone. Recorded in references/endpoints.md."
+        "status": "complete",
+        "verificationContract": "A live call with a real flag either succeeds or returns a field-level error naming what is missing; the 404 is gone. Recorded in references/endpoints.md.",
+        "completedAt": "2026-11-26T02:46:45.303Z",
+        "evidence": "POST /api/v5/machine/own returns 400 Incorrect Flag (route live); v4 404 confirmed; recorded in references/endpoints.md + SKILL.md; commit 3c8ed2a"
       },
       {
         "id": "t2-concurrency",
         "title": "Verify dedivip concurrency: can more than one machine be spawned at once?",
-        "status": "pending",
-        "verificationContract": "Empirical result recorded: attempt a second spawn while one is active and note the API's answer. Underpins whether boxes run in series or parallel."
+        "status": "complete",
+        "verificationContract": "Empirical result recorded: attempt a second spawn while one is active and note the API's answer. Underpins whether boxes run in series or parallel.",
+        "completedAt": "2026-11-26T02:49:39.605Z",
+        "evidence": "Live: POST /vm/spawn {\"machine_id\":351} while DutyBound active -> 403 \"You already have an active instance\"; after terminate -> 200. dedivip still 1 slot. Recorded in references/endpoints.md."
       },
       {
         "id": "t3-cap",
         "title": "Cap (351, easy, free): spawn, ARTeX task, capture, flag, notes",
-        "status": "pending",
-        "verificationContract": "notes/cap/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated."
+        "status": "complete",
+        "verificationContract": "notes/cap/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated.",
+        "completedAt": "2026-11-26T02:54:22.830Z",
+        "evidence": "Both flags accepted by HTB (machine_pwned true); notes/cap/ has README+poc.md+flags.txt; task 2 done 3/3; run 20261126T024001Z-8b01caa6 165 calls, 0 dropped."
       },
       {
         "id": "t4-expressway",
         "title": "Expressway (736, easy): spawn, ARTeX task, capture, flag, notes",
-        "status": "pending",
-        "verificationContract": "notes/expressway/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated."
+        "status": "complete",
+        "verificationContract": "notes/expressway/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated.",
+        "completedAt": "2026-11-26T03:08:24.014Z",
+        "evidence": "Both flags accepted by HTB (user a126d80d..., root 780a5799...); notes/expressway/README.md has full attack path (ike-scan PSK -> SSH ike -> CVE-2025-32463 sudo 1.9.17); box terminated."
       },
       {
         "id": "t5-orion",
         "title": "Orion (945, easy): spawn, ARTeX task, capture, flag, notes",
-        "status": "pending",
-        "verificationContract": "notes/orion/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated."
+        "status": "complete",
+        "verificationContract": "notes/orion/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated.",
+        "completedAt": "2026-11-26T03:18:06.875Z",
+        "evidence": "Both flags accepted by HTB (user ccdad380..., root 26c5e341...); notes/orion/README.md has full path (CVE-2025-32432 -> .env mysql root -> adam:darkangel -> root telnetd); box terminated."
       },
       {
         "id": "t6-report",
@@ -72,8 +82,7 @@
     "blockCompletion": false,
     "proposedAt": "2026-11-26T02:43:35.234Z"
   },
-  "verificationContract": "For each of the three boxes: `notes/<box>/` exists with flag and outcome; `htb.py active`/profile shows the box spawned then terminated as intended; the ARTeX task exists with a terminal state or a recorded reason; `data/llm-blobs` contains blobs whose run covers that box; `artexctl`-side capture assertions pass with `dropped=0` (or the drop count is reported). Final report lists all three with solved/unsolved and the exact evidence path for each.",
-  "currentTaskId": "t1-repair-own"
+  "verificationContract": "For each of the three boxes: `notes/<box>/` exists with flag and outcome; `htb.py active`/profile shows the box spawned then terminated as intended; the ARTeX task exists with a terminal state or a recorded reason; `data/llm-blobs` contains blobs whose run covers that box; `artexctl`-side capture assertions pass with `dropped=0` (or the drop count is reported). Final report lists all three with solved/unsolved and the exact evidence path for each."
 }
 
 # Goal Prompt
@@ -103,16 +112,16 @@ If blocked: Stop and ask when (a) the Venice balance exhausts again (402 through
 - Status: running
 - Auto-continue: on
 - Sisyphus mode: no
-- Time spent: 2m35s
-- Tokens used: 28K (28,176) tokens
+- Time spent: 33m08s
+- Tokens used: 207K (207,413) tokens
 - Verification contract: For each of the three boxes: `notes/<box>/` exists with flag and outcome; `htb.py active`/profile shows the box spawned then terminated as intended; the ARTeX task exists with a terminal state or a recorded reason; `data/llm-blobs` contains blobs whose run covers that box; `artexctl`-side capture assertions pass with `dropped=0` (or the drop count is reported). Final report lists all three with solved/unsolved and the exact evidence path for each.
 ## Tasks
 
 <!-- blockCompletion: false -->
-- [ ] t1-repair-own: Repair htb.py flag submission: replace the dead /machine/own with /machine/submit and its hash fields — contract: A live call with a real flag either succeeds or returns a field-level error naming what is missing; the 404 is gone. Recorded in references/endpoints.md.
-- [ ] t2-concurrency: Verify dedivip concurrency: can more than one machine be spawned at once? — contract: Empirical result recorded: attempt a second spawn while one is active and note the API's answer. Underpins whether boxes run in series or parallel.
-- [ ] t3-cap: Cap (351, easy, free): spawn, ARTeX task, capture, flag, notes — contract: notes/cap/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated.
-- [ ] t4-expressway: Expressway (736, easy): spawn, ARTeX task, capture, flag, notes — contract: notes/expressway/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated.
-- [ ] t5-orion: Orion (945, easy): spawn, ARTeX task, capture, flag, notes — contract: notes/orion/ has recon + attack path + flag + outcome; task id and run id recorded; box terminated.
+- [x] t1-repair-own: Repair htb.py flag submission: replace the dead /machine/own with /machine/submit and its hash fields — evidence: POST /api/v5/machine/own returns 400 Incorrect Flag (route live); v4 404 confirmed; recorded in references/endpoints.md + SKILL.md; commit 3c8ed2a
+- [x] t2-concurrency: Verify dedivip concurrency: can more than one machine be spawned at once? — evidence: Live: POST /vm/spawn {"machine_id":351} while DutyBound active -> 403 "You already have an active instance"; after terminate -> 200. dedivip still 1 slot. Recorded in references/endpoints.md.
+- [x] t3-cap: Cap (351, easy, free): spawn, ARTeX task, capture, flag, notes — evidence: Both flags accepted by HTB (machine_pwned true); notes/cap/ has README+poc.md+flags.txt; task 2 done 3/3; run 20261126T024001Z-8b01caa6 165 calls, 0 dropped.
+- [x] t4-expressway: Expressway (736, easy): spawn, ARTeX task, capture, flag, notes — evidence: Both flags accepted by HTB (user a126d80d..., root 780a5799...); notes/expressway/README.md has full attack path (ike-scan PSK -> SSH ike -> CVE-2025-32463 sudo 1.9.17); box terminated.
+- [x] t5-orion: Orion (945, easy): spawn, ARTeX task, capture, flag, notes — evidence: Both flags accepted by HTB (user ccdad380..., root 26c5e341...); notes/orion/README.md has full path (CVE-2025-32432 -> .env mysql root -> adam:darkangel -> root telnetd); box terminated.
 - [ ] t6-report: Final report: all three with solved/unsolved and evidence paths — contract: A summary naming each box, outcome, notes path, task id, blob run id, and capture drop count.
 

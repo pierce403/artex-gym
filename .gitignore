@@ -28,3 +28,6 @@ compose/.build/
 # Local scratch: vendored reference sources and ad-hoc probe payloads.
 # Not shipped, but kept in-tree so nothing lives in /tmp and disappears.
 .work/
+
+# Solved-box notes are evidence, not scratch: keep them tracked.
+!notes/

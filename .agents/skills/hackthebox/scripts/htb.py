@@ -293,7 +293,7 @@ def cmd_spawn(args) -> dict:
             f"terminating id={current.get('id')} {current.get('name')!r} "
             "to free the free-tier slot"
         )
-        call("POST", "/vm/terminate", {"id": current.get("id")})
+        call("POST", "/vm/terminate", {"machine_id": current.get("id")})
         # Wait for the slot to actually free; spawning immediately after a
         # terminate is the usual source of confusing errors.
         for _ in range(12):
@@ -304,7 +304,7 @@ def cmd_spawn(args) -> dict:
             raise HtbError("the slot did not free within 60s of terminate")
 
     print(f"spawning id={args.id}")
-    call("POST", "/vm/spawn", {"id": args.id})
+    call("POST", "/vm/spawn", {"machine_id": args.id})
 
     for _ in range(24):
         time.sleep(5)
@@ -319,7 +319,7 @@ def cmd_spawn(args) -> dict:
 
 
 def cmd_reset(args) -> dict:
-    return call("POST", "/vm/reset", {"id": args.id})
+    return call("POST", "/vm/reset", {"machine_id": args.id})
 
 
 def cmd_stop(_args) -> dict:
@@ -328,7 +328,7 @@ def cmd_stop(_args) -> dict:
         print("nothing to terminate")
         return {}
     print(f"terminating id={info.get('id')} {info.get('name')!r}")
-    return call("POST", "/vm/terminate", {"id": info.get("id")})
+    return call("POST", "/vm/terminate", {"machine_id": info.get("id")})
 
 
 def cmd_own(args) -> dict:

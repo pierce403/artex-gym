@@ -52,6 +52,44 @@ GET /machine/list/retired/paginated/?per_page=100&sort_by=release-date
 
 Source: `.work/vendor/htb-cli/cmd/machines.go` (`machineURL`, `retiredURL`).
 
+## Verified lifecycle payloads (live, 2026-11-26)
+
+`vm/spawn`, `vm/reset`, `vm/terminate` all take **`machine_id`**, not `id`.
+Body `{}` on spawn/reset answers:
+
+```
+422 {"message":"The machine id field is required.",
+     "errors":{"machine_id":["The machine id field is required."]}}
+```
+
+`htb-cli` and my first draft both used `{"id":...}`; that silently means "no
+machine id" and is easy to misread as an auth problem.
+
+### Side effect to know before probing
+
+`POST /vm/terminate` with `{}` **succeeds and terminates whatever is active**
+(200 {"message":"Machine terminated.","success":true}) — it does not need a
+machine id at all. So a `{}` "does this field exist?" probe on terminate kills
+the running box. Verified the hard way: DutyBound was terminated mid-run.
+
+Probe spawn/reset with `{}` (harmless 422), never terminate.
+
+### Concurrency: exactly ONE active instance, even on dedivip
+
+```
+GET  /machine/active                  -> DutyBound (999), ip 10.129.137.83
+POST /vm/spawn {"machine_id":351}     -> 403 {"message":"You already have an active instance"}
+.. terminate DutyBound ..
+POST /vm/spawn {"machine_id":351}     -> 200 {"message":"Machine deployed to lab.","success":true}
+```
+
+So the account is `dedivip` (`lab_server: dedivip_lab`) and still holds one
+instance at a time. The single-slot queue is correct and required, not a
+free-tier-only assumption. Boxes run in SERIES.
+
+Spawn is also slow: `isSpawning: true` with `ip: null` for ~90-100s before an
+IP appears. Poll `/machine/active` until `ip` is non-null.
+
 ## RESOLVED: flag submission is on v5, not v4
 
 `POST /api/v4/machine/own` is **404 with a valid token** — so `htb-cli`'s path
