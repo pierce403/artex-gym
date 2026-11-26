@@ -931,18 +931,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 36,
    "free": false,
    "id": 668,
-   "ip": null,
+   "ip": "10.129.232.51",
    "name": "Artificial",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "artificial-668",
-   "state": "pending",
-   "task_id": null,
+   "state": "timeout",
+   "task_id": "59",
    "tier": "Easy"
   },
   {
