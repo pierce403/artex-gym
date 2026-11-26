@@ -556,18 +556,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 382,
-   "ip": null,
+   "ip": "10.129.95.235",
    "name": "Validation",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "validation-382",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "37",
    "tier": "Easy"
   },
   {
