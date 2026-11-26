@@ -541,18 +541,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 108,
-   "ip": null,
+   "ip": "10.129.137.162",
    "name": "Shocker",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "shocker-108",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "36",
    "tier": "Easy"
   },
   {
