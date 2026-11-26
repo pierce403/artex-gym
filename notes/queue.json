@@ -151,18 +151,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 30,
    "free": false,
    "id": 6,
-   "ip": null,
+   "ip": "10.129.137.122",
    "name": "Optimum",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "optimum-6",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "13",
    "tier": "Easy"
   },
   {
