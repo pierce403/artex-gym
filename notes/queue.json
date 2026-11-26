@@ -871,18 +871,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 35,
    "free": false,
    "id": 513,
-   "ip": null,
+   "ip": "10.129.228.98",
    "name": "Precious",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "precious-513",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "55",
    "tier": "Easy"
   },
   {
