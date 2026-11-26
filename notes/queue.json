@@ -961,18 +961,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 36,
    "free": true,
    "id": 1018,
-   "ip": null,
+   "ip": "10.129.137.215",
    "name": "DoubleTake",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "doubletake-1018",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "61",
    "tier": "Easy"
   },
   {
