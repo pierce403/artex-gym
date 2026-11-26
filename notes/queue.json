@@ -376,18 +376,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 14,
-   "ip": null,
+   "ip": "10.129.95.234",
    "name": "Granny",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "granny-14",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "25",
    "tier": "Easy"
   },
   {
