@@ -997,11 +997,11 @@
    "id": 514,
    "ip": "10.129.228.109",
    "name": "Squashed",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "squashed-514",
-   "state": "pending",
+   "state": "solved",
    "task_id": "63",
    "tier": "Easy"
   },
