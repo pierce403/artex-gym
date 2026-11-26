@@ -34,6 +34,10 @@ import urllib.request
 from pathlib import Path
 
 BASE = "https://labs.hackthebox.com/api/v4"
+# Machine ownership moved to v5: the web app posts /machine/own with
+# enableV5Api for MACHINE only (common-api: `a = n === MACHINE`). On v4 the same
+# path is 404, which is why every v4 probe looked like a missing route.
+BASE_V5 = "https://labs.hackthebox.com/api/v5"
 UA = "artex-gym-htb/0.1"
 
 
@@ -98,9 +102,11 @@ def validate_token(tok: str, source: str) -> None:
         )
 
 
-def call(method: str, path: str, body: dict | None = None, *, retry_429: bool = True) -> dict:
+def call(
+    method: str, path: str, body: dict | None = None, *, retry_429: bool = True, v5: bool = False
+) -> dict:
     """One request. On 429, sleep Retry-After once and retry; then fail."""
-    url = f"{BASE}{path}"
+    url = f"{BASE_V5 if v5 else BASE}{path}"
     data = json.dumps(body).encode() if body is not None else None
     req = urllib.request.Request(url, data=data, method=method)
     req.add_header("Authorization", f"Bearer {token()}")
@@ -326,8 +332,22 @@ def cmd_stop(_args) -> dict:
 
 
 def cmd_own(args) -> dict:
+    """Submit a flag. Route is v5, and needs only id + flag (no hashes).
+
+    A wrong flag answers 400 {"message":"Incorrect Flag."}; that is a real
+    answer, not a failure of the call, so it is reported distinctly.
+    """
     flag = "".join(args.flag.split())  # a trailing space is the classic false negative
-    return call("POST", "/machine/own", {"id": args.id, "flag": flag})
+    try:
+        result = call("POST", "/machine/own", {"id": args.id, "flag": flag}, v5=True)
+    except HtbError as exc:
+        text = str(exc)
+        if "Incorrect Flag" in text:
+            print(f"rejected: {args.id} did not accept that flag")
+            return {"accepted": False, "machine": args.id}
+        raise
+    print(f"accepted: {args.id}")
+    return result
 
 
 def cmd_vpn(_args) -> dict:

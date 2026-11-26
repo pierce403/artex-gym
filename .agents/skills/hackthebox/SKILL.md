@@ -62,7 +62,7 @@ Name → id needs `/search/fetch`; profiles are keyed by numeric id only.
     POST /vm/spawn        # start a machine        {"id": <machine_id>}
     POST /vm/terminate    # stop the active machine {"id": <machine_id>}
     POST /vm/reset        # revert to clean state  {"id": <machine_id>}
-    POST /machine/own     # submit the user flag    {"id": <machine_id>, "flag": "..."}
+    POST /api/v5/machine/own   # submit a flag  {"id": <machine_id>, "flag": "..."}
     POST /arena/own       # release-arena machines use this instead of machine/own
     POST /machine/submit  # machine questions/answers
 
@@ -72,9 +72,25 @@ Name → id needs `/search/fetch`; profiles are keyed by numeric id only.
 There is **no** `/machine/own/{id}`, `/machine/play/{id}`, or
 `/machine/{id}` route (all 404). Do not construct them.
 
-### Flag submission
+### Flag submission — v5, not v4
 
-    POST /machine/own   {"id": 123, "flag": "deadbeef..."}
+    POST /api/v5/machine/own   {"id": 123, "flag": "HTB{...}"}
+
+**Machines own on v5.** `POST /api/v4/machine/own` is 404 with a valid token;
+the web app sets `enableV5Api` only for MACHINE. No hashes, links or
+accept_terms are needed — that is `POST /api/v4/machine/submit`, which is the
+*creator* form for submitting a new machine.
+
+A wrong flag answers `400 {"message":"Incorrect Flag."}` — a real answer, not a
+broken call.
+
+Beware the lookalikes:
+
+| route | what it actually is |
+|---|---|
+| `POST /api/v5/machine/own` | **flag submission** (what you want) |
+| `POST /api/v4/machine/submit` | submit a NEW machine for review (creator form) |
+| `POST /api/v4/machines/{cid}/tasks/{tid}/flag` | Starting Point per-task flags |
 
 Strip whitespace from a pasted flag before sending; a trailing space is the
 usual false "wrong flag".

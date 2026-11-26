@@ -30,7 +30,8 @@ Method: `curl -H 'Accept: application/json'`, then read 401/405/404.
 | `/machine/paginated/` (trailing slash) | 401 | — | exists; the bare path 404s on some hosts |
 | `/machine/list/retired/paginated/` | 401 | — | exists, retired catalogue |
 | `/machine/unreleased/` | 404 | — | not on labs; `htb-cli` cites it |
-| `/machine/own` | 404 | 404 | not as a bare path — see below |
+| `/machine/own` (v4) | 404 | 404 | **exists on v5 only** |
+| `/machine/own` (v5) | — | 400 | correct route: `{"id","flag"}` |
 | `/machine/own/{id}` | 404 | 404 | does not exist |
 | `/machine/{id}` | 404 | 404 | does not exist |
 | `/machine/play/{id}` | 404 | 404 | does not exist |
@@ -51,14 +52,47 @@ GET /machine/list/retired/paginated/?per_page=100&sort_by=release-date
 
 Source: `.work/vendor/htb-cli/cmd/machines.go` (`machineURL`, `retiredURL`).
 
-## Contradiction to resolve with a live token
+## RESOLVED: flag submission is on v5, not v4
 
-`POST /machine/own` probed **404**, but `GoToolSharing/htb-cli` uses
-`{base}/machine/own` with `{"id": ..., "flag": ...}`. Most likely the route is
-registered only for authenticated POSTs, or the probe's empty body was rejected
-before routing. **Verify with a real token before relying on the flag path** —
-this is the single most important unconfirmed route, because it is how a run
-proves success.
+`POST /api/v4/machine/own` is **404 with a valid token** — so `htb-cli`'s path
+is stale, and this was not an auth artifact.
+
+`POST /api/v5/machine/own` is the real route:
+
+```
+$ curl -X POST -H 'Accept: application/json' -H "Authorization: Bearer $TOK" \
+    -d '{"id":999,"flag":"HTB{probe}"}' \
+    https://labs.hackthebox.com/api/v5/machine/own
+400 {"message":"Incorrect Flag."}
+```
+
+Payload is just `{"id": <machine id>, "flag": "<flag>"}` — **no hashes, no
+links, no accept_terms**. A wrong flag answers `400 {"message":"Incorrect
+Flag."}`, which is a real answer, not a call failure.
+
+Why every v4 probe missed it: the web app's own bundle decides the API version
+per content type. From `assets/common-api-*.js`:
+
+```js
+a = (n, r, i) => { let a = n === e.MACHINE;
+  return t.post(`/${n}/own`, r, {enableV5Api: a, signal: i}) }
+```
+
+`enableV5Api` is true **only for MACHINE**, so machines use `/api/v5/machine/own`
+while challenges and fortresses stay on v4.
+
+Do **not** confuse this with two other routes found in the bundles:
+
+- `POST /api/v4/machine/submit` — the **machine creator** form (submit a NEW
+  machine for review). It demands `name`, `user`, `admin`, both 32-char hashes,
+  `download_link`, `writeup_link`, `hypervisor`, `accept_terms`, and answers
+  "The name has already been taken" for an existing box. Wrong tool for a flag.
+- `POST /api/v4/machines/{contentId}/tasks/{taskId}/flag` — per-task flags
+  (Starting Point), not machine ownership.
+
+Evidence bundle, kept in `.work/probes/htb-web/`: `common-api-JS`,
+`machines-api-JS`, `MachineSubmission.js`, `MachineProfile.js`, `http-client.js`
+(base URLs v4 + v5).
 
 ## Inferred from a maintained client (not official docs)
 
@@ -91,7 +125,8 @@ Run each once and paste the real status + a truncated body:
 - [ ] `GET /machine/active` poll — how long until `ip` appears
 - [ ] `POST /vm/terminate {"id":1}`
 - [ ] `POST /vm/reset {"id":1}`
-- [ ] `POST /machine/own {"id":1,"flag":"..."}` — **confirm the 404 above**
+- [x] `POST /api/v5/machine/own {"id":999,"flag":"..."}` -> 400 Incorrect Flag
+      (route confirmed; needs a real flag to confirm a 200)
 - [ ] `GET /search/fetch?query=Lame` — response shape for name→id
 - [ ] rate-limit headers on a burst (`X-RateLimit-*`? `Retry-After`?)
 
