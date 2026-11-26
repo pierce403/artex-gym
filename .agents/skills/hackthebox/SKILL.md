@@ -95,6 +95,32 @@ Beware the lookalikes:
 Strip whitespace from a pasted flag before sending; a trailing space is the
 usual false "wrong flag".
 
+## Always shut the box down once the flags are accepted
+
+**The last step of every box is `terminate`, not "flags recorded".** A solved box
+left running:
+
+- holds the single instance slot, so the next box cannot be spawned;
+- silently expires (~8h) and then answers nothing, so any task still pointed at
+  its IP burns model tokens against a dead address;
+- costs nothing in HTB credit but costs real money in LLM calls.
+
+Order of operations, every time:
+
+    1. read the flags off the box
+    2. POST /api/v5/machine/own  (submit)   <- until accepted, the box is NOT done
+    3. verify: profile/{id}.authUserInRootOwns == true
+    4. POST /vm/terminate                    <- do not skip
+    5. GET /machine/active  -> expect "no machine is active"
+
+If step 2 is rejected, **do not terminate yet** — flags rotate on respawn, so a
+rejected flag plus a terminated box means the work is lost and must be redone.
+
+A "solved" claim with `authUserInRootOwns: false` is not solved. This happened
+for real: ARTeX finished a task with `done`, 4/4 goals and both flags in its
+report, but nobody submitted them, so HTB still showed the box unowned. See
+`notes/report.md`.
+
 ## Free tier: exactly one active machine
 
 Free accounts may have **one** machine spawned at a time. Every workflow here

@@ -22,8 +22,9 @@ starts ARTEX + `llm-logger` + Postgres, authenticates, turns capture on, and
 Calls with `curl` through `localhost:4000/v1/chat/completions` produce
 immutable gzipped blobs under `data/llm-blobs/{run_id}/`.
 
-See `notes/report.md` for a real run: three HackTheBox machines driven to
-HTB-accepted flags with ARTeX, with capture held at 0 drops throughout.
+See `notes/report.md` for a real run: four HackTheBox machines driven to
+HTB-accepted flags with ARTeX, with capture held at 0 drops throughout, plus the
+per-box write-ups in `notes/{cap,expressway,orion,dutybound}/`.
 
 ## Install
 
