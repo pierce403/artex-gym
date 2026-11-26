@@ -16,18 +16,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 23,
    "free": false,
    "id": 2,
-   "ip": null,
+   "ip": "10.129.137.108",
    "name": "Legacy",
    "note": "",
    "os": "Windows",
    "retired": true,
    "slug": "legacy-2",
    "state": "pending",
-   "task_id": null,
+   "task_id": "6",
    "tier": "Easy"
   },
   {
