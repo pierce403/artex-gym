@@ -886,18 +886,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 35,
    "free": false,
    "id": 680,
-   "ip": null,
+   "ip": "10.129.234.130",
    "name": "Reset",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "reset-680",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "56",
    "tier": "Easy"
   },
   {
