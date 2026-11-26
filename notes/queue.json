@@ -166,18 +166,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 30,
    "free": false,
    "id": 401,
-   "ip": null,
+   "ip": "10.129.95.241",
    "name": "Return",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "return-401",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "14",
    "tier": "Easy"
   },
   {
