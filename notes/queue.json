@@ -1231,18 +1231,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 38,
    "free": false,
    "id": 587,
-   "ip": null,
+   "ip": "10.129.230.193",
    "name": "Crafty",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Windows",
    "retired": true,
    "slug": "crafty-587",
-   "state": "pending",
-   "task_id": null,
+   "state": "timeout",
+   "task_id": "72",
    "tier": "Easy"
   },
   {
