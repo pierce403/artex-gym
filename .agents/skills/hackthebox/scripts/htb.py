@@ -424,8 +424,28 @@ def cmd_spawn(args) -> dict:
         else:
             raise HtbError("the slot did not free within 60s of terminate")
 
+    # Spawn retries: after a terminate the slot takes a few seconds to release,
+    # so an immediate spawn answers "already have an active instance" or returns
+    # no IP. Observed twice (22:11, 23:27) as a burst of false no-spawns right
+    # after a successful solve. Retry before declaring the box unspawnable.
+    spawned = False
+    last_err = None
+    for attempt in range(1, 5):
+        try:
+            call("POST", "/vm/spawn", {"machine_id": args.id})
+            spawned = True
+            break
+        except HtbError as exc:
+            last_err = str(exc)
+            if "already have an active instance" in last_err:
+                print(f"  spawn attempt {attempt}: slot still busy; waiting")
+                time.sleep(10 * attempt)
+                continue
+            print(f"  spawn attempt {attempt}: {last_err[:120]}")
+            time.sleep(10 * attempt)
+    if not spawned:
+        raise HtbError(f"spawn failed after 4 attempts: {(last_err or '')[:160]}")
     print(f"spawning id={args.id}")
-    call("POST", "/vm/spawn", {"machine_id": args.id})
 
     for _ in range(24):
         time.sleep(5)
