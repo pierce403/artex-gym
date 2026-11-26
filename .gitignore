@@ -31,3 +31,6 @@ compose/.build/
 
 # Solved-box notes are evidence, not scratch: keep them tracked.
 !notes/
+
+# Agent scaffolding (goal ledger, audit transcripts). Not project content.
+.pi/
