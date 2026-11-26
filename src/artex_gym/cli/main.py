@@ -7,12 +7,14 @@ as the interface spec.
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Annotated
 
 import typer
 
 from artex_gym import __version__
+from artex_gym.pin import ArtexPin, PinError, verify
 
 app = typer.Typer(
     name="artexctl",
@@ -25,6 +27,35 @@ app = typer.Typer(
 # used instead; keep bracket claims out of help strings if that changes.
 
 NOT_IMPLEMENTED_STATUS = 3
+PIN_MISMATCH_STATUS = 4
+
+
+def _artex_source(cli_value: Path | None) -> Path:
+    """Resolve the ARTEX checkout: flag, then env, then the pin file's default."""
+    if cli_value is not None:
+        return cli_value.expanduser()
+    env = os.environ.get("ARTEX_GYM_ARTEX_SOURCE")
+    if env:
+        return Path(env).expanduser()
+    raise PinError(
+        "no ARTEX checkout: pass --artex-source or set ARTEX_GYM_ARTEX_SOURCE (see .env.example)"
+    )
+
+
+def _check_pin(cli_value: Path | None) -> None:
+    """Verify the checkout is the commit in compose/artex.lock.json."""
+    pin = ArtexPin.load()
+    state = verify(_artex_source(cli_value), pin)
+    typer.secho(
+        f"ARTEX pinned: {state.head_sha[:12]} ({pin.git_describe or state.describe})",
+        fg=typer.colors.GREEN,
+    )
+    if state.dirty:
+        typer.secho(
+            "  warning: checkout has uncommitted changes; the commit is what is pinned",
+            fg=typer.colors.YELLOW,
+            err=True,
+        )
 
 
 def _todo(command: str, milestone: str) -> None:
@@ -52,12 +83,26 @@ def main(
 def up(
     artex_source: Annotated[
         Path | None,
-        typer.Option(help="ARTEX git checkout to build/reference. Defaults to $ARTEX_SOURCE."),
+        typer.Option(help="ARTEX git checkout to build from. Defaults to $ARTEX_GYM_ARTEX_SOURCE."),
     ] = None,
     detach: Annotated[
         bool, typer.Option(help="Return once healthy instead of streaming logs.")
     ] = True,
+    skip_pin_check: Annotated[
+        bool,
+        typer.Option(
+            "--skip-pin-check", help="Build whatever commit the checkout is at. Recorded."
+        ),
+    ] = False,
 ) -> None:
+    # Pin verification runs before anything is built: a drifted checkout must
+    # fail loudly, not silently change the agent under the benchmark.
+    if not skip_pin_check:
+        try:
+            _check_pin(artex_source)
+        except PinError as exc:
+            typer.secho(str(exc), fg=typer.colors.RED, err=True)
+            raise typer.Exit(PIN_MISMATCH_STATUS) from exc
     _todo("up", "M1")
 
 

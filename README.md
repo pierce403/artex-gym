@@ -3,17 +3,22 @@
 One CLI that takes an ARTEX checkout to a trained, evaluated model:
 provision → capture → join → dataset → train → eval.
 
-ARTEX (github.com/BaaRai/ARTEX, AGPL-3.0) is never vendored and never
-patched. We drive it through environment variables, a compose overlay and
-HTTP only.
+ARTEX (AGPL-3.0) is never vendored and never patched. We drive it through
+environment variables, a compose overlay and HTTP only.
+
+Source of truth: our fork `pierce403/ARTEX` (upstream's history at an older
+point), pinned by commit in `compose/artex.lock.json`. `artexctl up` verifies
+the checkout is that commit before building — see `adr/0001-artex-pinning.md`.
 
 ## Status
 
-M0 — skeleton only. Every command exits with `NotImplemented`.
+M0 — skeleton only. Every command exits with `NotImplemented`; `up` also
+verifies the ARTEX pin first.
 
 ## Install
 
-    uv sync --all-groups
+    uv sync --all-groups            # CLI + tests
+    uv sync --extra collector       # + the llm-logger sidecar deps
 
 ## Commands
 

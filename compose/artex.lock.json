@@ -1,13 +1,17 @@
 {
   "$comment": "See adr/0001-artex-pinning.md. artex_git_sha is the authoritative pin; image_digest records what was actually built from it.",
+  "source_remote": "git@github.com:pierce403/ARTEX.git",
+  "source_repo": "https://github.com/pierce403/ARTEX",
+  "upstream_repo": "https://github.com/BaaRai/ARTEX",
+  "license": "AGPL-3.0",
   "artex_git_sha": "38c7477c51636c9221c78683f4aa9c4f08f65c19",
-  "artex_version": "v0.7.0",
-  "artex_git_describe": null,
-  "artex_git_describe_note": "No tags exist in the local checkout, so git describe cannot run. artex_version is taken from the GitHub release, which is the newest tag upstream.",
+  "artex_git_describe": "v0.7.0-109-g38c7477",
+  "artex_nearest_tag": "v0.7.0",
+  "artex_commits_behind_upstream": 82,
+  "upstream_main_sha_at_pin_time": "3cb06383fd99ffe7686abe1d375de11da7cfad54",
+  "image_repo": "ghcr.io/pierce403/artex",
   "image_ref": "artex:local",
   "image_digest": null,
-  "image_digest_note": "Filled by `artexctl up` on first successful build; null means 'record me'. Swap image_ref to ghcr.io/baarai/artex@sha256:... once the package is publicly pullable.",
-  "source_repo": "https://github.com/BaaRai/ARTEX",
-  "license": "AGPL-3.0",
+  "image_digest_note": "Filled by `artexctl up` on first successful build; null means 'record me'. Switch image_ref to ghcr.io/pierce403/artex@sha256:... after the first v* tag push publishes the package.",
   "recorded_at": "2026-11-26"
 }
