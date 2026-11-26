@@ -481,18 +481,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 666,
-   "ip": null,
+   "ip": "10.129.234.87",
    "name": "Down",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "down-666",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "32",
    "tier": "Easy"
   },
   {
