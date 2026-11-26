@@ -1081,18 +1081,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 37,
    "free": false,
    "id": 847,
-   "ip": null,
+   "ip": "10.129.137.231",
    "name": "CCTV",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "cctv-847",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "67",
    "tier": "Easy"
   },
   {
