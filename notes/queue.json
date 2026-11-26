@@ -946,18 +946,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 36,
    "free": false,
    "id": 582,
-   "ip": null,
+   "ip": "10.129.137.213",
    "name": "Bizness",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "bizness-582",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "60",
    "tier": "Easy"
   },
   {
