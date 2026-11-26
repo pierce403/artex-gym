@@ -1066,18 +1066,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 37,
    "free": false,
    "id": 263,
-   "ip": null,
+   "ip": "10.129.137.227",
    "name": "Buff",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "buff-263",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "66",
    "tier": "Easy"
   },
   {
