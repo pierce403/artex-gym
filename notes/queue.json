@@ -316,18 +316,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 627,
-   "ip": null,
+   "ip": "10.129.231.149",
    "name": "Cicada",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "cicada-627",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "22",
    "tier": "Easy"
   },
   {
