@@ -301,18 +301,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 603,
-   "ip": null,
+   "ip": "10.129.231.37",
    "name": "BoardLight",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "boardlight-603",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "21",
    "tier": "Easy"
   },
   {
