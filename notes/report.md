@@ -23,7 +23,8 @@ Verified live with `GET /api/v4/machine/profile/{id}`:
 | Orion | `notes/orion/` | 3 | `paused`, 0/3 goals, 2 findings | 123 |
 
 Blob counts are greps for each box's IP(s) across `data/llm-blobs`
-(546 blobs on disk in total). Task ids, states and finding counts were read
+(per-box counts are stable; the total was 572 blobs at final measurement and keeps
+rising while task 1 runs). Task ids, states and finding counts were read
 from `GET /api/tasks/{id}`; finding rows from the `findings` table.
 
 ### Why task 3 is paused rather than terminal
@@ -69,19 +70,41 @@ before/after snapshot.
    used. Fixed by spawning the box again and giving ArTeX task 4 with the
    confirmed path; the task reached `done`, 3/3 goals.
 2. Blob totals in the first report (373 / 261) were stale. Final measured
-   figures: **546 total** on disk; per-box 68 / 90 / 123.
+   figures: per-box **68 / 90 / 123** (stable); the on-disk total was 572 at
+   the final measurement and grows while task 1 is still working.
 3. Task 3 (Orion) is `paused` with 0/3 goals even though ArTeX produced both
    findings and the flags were accepted. Flags were submitted before the
    planner judged the goals; nothing reconciles an externally-accepted flag
    back into a task. Recorded, not hidden.
 
-## DutyBound in parallel
+## DutyBound in parallel — partial, stated plainly
 
-Task 1 was paused after a probe terminated its box, then **respawned** (DutyBound
-at 10.129.137.93) and resumed with an added goal naming the new IP; it is
-`running` with 3 workers at the time of writing (0/4 goals, 6.9M input tokens).
-So it was parallel for most of the run but not continuously — it was paused
-between the probe incident and the respawn.
+The goal asked that task 1 "keeps running in parallel throughout". It did not,
+continuously:
+
+- 02:50 task 1 was **paused** because a `{}` probe against `/vm/terminate`
+  killed its box (its own goal still named the dead 10.129.137.83).
+- It stayed paused while Cap and part of Orion ran.
+- 03:35 DutyBound was **respawned** at 10.129.137.93, a new goal naming the new
+  IP was added via `POST /api/tasks/1/goals`, and the task was resumed.
+- From then on it ran in parallel: 3 workers in flight, and by 03:52 it had
+  produced its first finding (medium, the BCBP NAME-field concatenation at
+  `/checkout/boarding-pass/verify`) at ~10.0M input tokens, 0/4 goals.
+
+So: parallel for roughly the second half of the run, not throughout. The pause
+was caused by my own careless probe, not by ARTeX.
+
+## Findings produced by ArTeX (7 total, read from the `findings` table)
+
+| task | box | severity | finding |
+|---|---|---|---|
+| 1 | DutyBound | medium | BCBP passenger NAME field concatenation at `/checkout/boarding-pass/verify` |
+| 2 | Cap | high | unauthenticated `/download/0` pcap leaks plaintext FTP creds |
+| 2 | Cap | high | `python3.8` carries `cap_setuid` → root |
+| 3 | Orion | critical | Craft CMS 5.6.16 unauth RCE (CVE-2025-32432) |
+| 3 | Orion | high | root-run localhost telnetd reachable as adam |
+| 4 | Expressway | high | IKEv1 aggressive mode leaks a crackable PSK (`ike@expressway.htb`) |
+| 4 | Expressway | critical | custom setuid `sudo` 1.9.17 `-R` chroot NSS (CVE-2025-32463) |
 
 ## Facts worth keeping (in the htb skill)
 

@@ -5,14 +5,14 @@
   "status": "active",
   "autoContinue": true,
   "usage": {
-    "tokensUsed": 277755,
-    "activeSeconds": 3558
+    "tokensUsed": 281929,
+    "activeSeconds": 3595
   },
   "sisyphus": false,
   "createdAt": "2026-11-26T02:43:43.552Z",
-  "updatedAt": "2026-11-26T03:45:16.941Z",
+  "updatedAt": "2026-11-26T03:45:55.268Z",
   "activePath": ".pi/goals/active_goal_2026112518434355_mwwy7l8g-gyp5ji.md",
-  "revision": 230,
+  "revision": 233,
   "scheduler": {
     "version": 1,
     "owner": "01a21569-d72f-7448-bf24-aeb1cf6509fe",
@@ -114,8 +114,8 @@ If blocked: Stop and ask when (a) the Venice balance exhausts again (402 through
 - Status: running
 - Auto-continue: on
 - Sisyphus mode: no
-- Time spent: 59m18s
-- Tokens used: 278K (277,755) tokens
+- Time spent: 59m55s
+- Tokens used: 282K (281,929) tokens
 - Verification contract: For each of the three boxes: `notes/<box>/` exists with flag and outcome; `htb.py active`/profile shows the box spawned then terminated as intended; the ARTeX task exists with a terminal state or a recorded reason; `data/llm-blobs` contains blobs whose run covers that box; `artexctl`-side capture assertions pass with `dropped=0` (or the drop count is reported). Final report lists all three with solved/unsolved and the exact evidence path for each.
 ## Tasks
 
