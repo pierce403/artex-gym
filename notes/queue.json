@@ -286,18 +286,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 32,
    "free": false,
    "id": 400,
-   "ip": null,
+   "ip": "10.129.137.131",
    "name": "Antique",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "antique-400",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "20",
    "tier": "Easy"
   },
   {
