@@ -526,18 +526,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 687,
-   "ip": null,
+   "ip": "10.129.234.57",
    "name": "Manage",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "manage-687",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "35",
    "tier": "Easy"
   },
   {
