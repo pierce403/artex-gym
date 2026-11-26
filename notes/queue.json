@@ -916,18 +916,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 36,
    "free": false,
    "id": 9,
-   "ip": null,
+   "ip": "10.129.137.209",
    "name": "Arctic",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Windows",
    "retired": true,
    "slug": "arctic-9",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "58",
    "tier": "Easy"
   },
   {
