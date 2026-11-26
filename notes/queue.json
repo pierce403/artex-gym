@@ -1126,18 +1126,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 37,
    "free": false,
    "id": 835,
-   "ip": null,
+   "ip": "10.129.244.106",
    "name": "WingData",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "wingdata-835",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "70",
    "tier": "Easy"
   },
   {
