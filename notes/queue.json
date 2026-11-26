@@ -661,18 +661,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 34,
    "free": false,
    "id": 64,
-   "ip": null,
+   "ip": "10.129.137.174",
    "name": "Mirai",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "mirai-64",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "44",
    "tier": "Easy"
   },
   {
