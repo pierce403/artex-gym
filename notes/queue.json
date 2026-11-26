@@ -1096,18 +1096,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 37,
    "free": false,
    "id": 539,
-   "ip": null,
+   "ip": "10.129.228.231",
    "name": "MonitorsTwo",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "monitorstwo-539",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "68",
    "tier": "Easy"
   },
   {
