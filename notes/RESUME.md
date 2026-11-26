@@ -34,9 +34,12 @@ timeout waste. Do not lower it without re-measuring.
 
 ## Known failure modes
 
-- `skipped:no-spawn` ("no IP appeared within 120s") — usually the VPN. Three
-  consecutive stops the loop on purpose. Check the tunnel, then re-run; the box
-  stays `pending`? No: it is recorded `skipped:no-spawn`, so reset it first:
+- `skipped:no-spawn` ("no IP appeared within 120s"). Three consecutive stops
+  the loop on purpose. In practice (2026-11-26 22:11) this was **transient**:
+  a manual spawn two minutes later succeeded, so the slot was still releasing
+  after a timeout. Recovery: reset the skipped boxes to pending, then restart:
   `python3 -c "import json;p='notes/queue.json';q=json.load(open(p));[b.update(state='pending',note='') for b in q['boxes'] if b['state']=='skipped:no-spawn'];json.dump(q,open(p,'w'),indent=1,sort_keys=True)"`
 - `timeout` — 20 minutes elapsed. Left as-is; a re-attempt costs another 20m.
 - `partial:user-only` — user flag accepted, root not. Worth a manual re-run.
+- The reset one-liner above is the documented procedure; it was used once.
+  Restart with the same `tmux new-session` line; the loop resumes from pending.
