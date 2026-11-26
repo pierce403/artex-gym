@@ -466,18 +466,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 33,
    "free": false,
    "id": 673,
-   "ip": null,
+   "ip": "10.129.234.47",
    "name": "Data",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "data-673",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "31",
    "tier": "Easy"
   },
   {
