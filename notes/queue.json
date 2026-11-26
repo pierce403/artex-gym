@@ -841,18 +841,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 35,
    "free": false,
    "id": 590,
-   "ip": null,
+   "ip": "10.129.229.121",
    "name": "Perfection",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "perfection-590",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "53",
    "tier": "Easy"
   },
   {
