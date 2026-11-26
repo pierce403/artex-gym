@@ -31,18 +31,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 25,
    "free": false,
    "id": 1,
-   "ip": null,
+   "ip": "10.129.137.112",
    "name": "Lame",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "lame-1",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "7",
    "tier": "Easy"
   },
   {
