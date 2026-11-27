@@ -1966,18 +1966,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 41,
    "free": false,
    "id": 948,
-   "ip": null,
+   "ip": "10.129.138.75",
    "name": "Nexus",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "nexus-948",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "109",
    "tier": "Easy"
   },
   {
