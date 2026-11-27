@@ -1996,18 +1996,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 41,
    "free": false,
    "id": 481,
-   "ip": null,
+   "ip": "10.129.138.79",
    "name": "RedPanda",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "redpanda-481",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "111",
    "tier": "Easy"
   },
   {
