@@ -3916,18 +3916,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 50,
    "free": false,
    "id": 165,
-   "ip": null,
+   "ip": "10.129.138.150",
    "name": "Teacher",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "teacher-165",
-   "state": "pending",
-   "task_id": null,
+   "state": "partial:user-only",
+   "task_id": "145",
    "tier": "Easy"
   },
   {
