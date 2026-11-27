@@ -4366,18 +4366,18 @@
    "tier": "Medium"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 52,
    "free": false,
    "id": 248,
-   "ip": null,
+   "ip": "10.129.229.101",
    "name": "Admirer",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "admirer-248",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "148",
    "tier": "Easy"
   },
   {
