@@ -2311,18 +2311,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 43,
    "free": false,
    "id": 160,
-   "ip": null,
+   "ip": "10.129.138.93",
    "name": "Curling",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "curling-160",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "119",
    "tier": "Easy"
   },
   {
