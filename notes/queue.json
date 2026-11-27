@@ -3151,18 +3151,18 @@
    "tier": "Medium"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 47,
    "free": false,
    "id": 297,
-   "ip": null,
+   "ip": "10.129.138.131",
    "name": "Academy",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "academy-297",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "139",
    "tier": "Easy"
   },
   {
