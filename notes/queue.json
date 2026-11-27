@@ -1756,18 +1756,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 40,
    "free": false,
    "id": 373,
-   "ip": null,
+   "ip": "10.129.95.185",
    "name": "Previse",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "previse-373",
-   "state": "pending",
-   "task_id": null,
+   "state": "timeout",
+   "task_id": "95",
    "tier": "Easy"
   },
   {
