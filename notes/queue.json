@@ -2866,18 +2866,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 45,
    "free": false,
    "id": 234,
-   "ip": null,
+   "ip": "10.129.230.172",
    "name": "Remote",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "remote-234",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "134",
    "tier": "Easy"
   },
   {
