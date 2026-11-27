@@ -2851,18 +2851,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 45,
    "free": false,
    "id": 662,
-   "ip": null,
+   "ip": "10.129.232.88",
    "name": "Fluffy",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "fluffy-662",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "133",
    "tier": "Easy"
   },
   {
