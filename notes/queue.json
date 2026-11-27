@@ -1696,18 +1696,18 @@
    "tier": "Medium"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 40,
    "free": false,
    "id": 359,
-   "ip": null,
+   "ip": "10.129.95.166",
    "name": "BountyHunter",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "bountyhunter-359",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "91",
    "tier": "Easy"
   },
   {
