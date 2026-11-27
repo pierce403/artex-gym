@@ -4396,18 +4396,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 52,
    "free": false,
    "id": 298,
-   "ip": null,
+   "ip": "10.129.138.171",
    "name": "Laboratory",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "laboratory-298",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "150",
    "tier": "Easy"
   },
   {
