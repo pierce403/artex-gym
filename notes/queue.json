@@ -1741,18 +1741,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 40,
    "free": false,
    "id": 533,
-   "ip": null,
+   "ip": "10.129.228.213",
    "name": "Inject",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "inject-533",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "94",
    "tier": "Easy"
   },
   {
