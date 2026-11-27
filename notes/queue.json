@@ -1327,11 +1327,11 @@
    "id": 624,
    "ip": "10.129.231.103",
    "name": "Sightless",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "sightless-624",
-   "state": "pending",
+   "state": "solved",
    "task_id": "80",
    "tier": "Easy"
   },
