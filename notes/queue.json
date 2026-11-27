@@ -1921,18 +1921,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 41,
    "free": false,
    "id": 308,
-   "ip": null,
+   "ip": "10.129.138.70",
    "name": "Delivery",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "delivery-308",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "107",
    "tier": "Easy"
   },
   {
