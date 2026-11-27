@@ -1471,18 +1471,18 @@
    "tier": "Medium"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 39,
    "free": false,
    "id": 323,
-   "ip": null,
+   "ip": "10.129.48.89",
    "name": "Armageddon",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "armageddon-323",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "84",
    "tier": "Easy"
   },
   {
