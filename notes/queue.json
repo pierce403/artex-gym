@@ -2026,18 +2026,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 41,
    "free": false,
    "id": 317,
-   "ip": null,
+   "ip": "10.129.138.83",
    "name": "Spectra",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Other",
    "retired": true,
    "slug": "spectra-317",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "113",
    "tier": "Easy"
   },
   {
