@@ -2641,18 +2641,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 44,
    "free": false,
    "id": 408,
-   "ip": null,
+   "ip": "10.129.138.103",
    "name": "Secret",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "secret-408",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "129",
    "tier": "Easy"
   },
   {
