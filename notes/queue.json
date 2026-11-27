@@ -1591,18 +1591,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 39,
    "free": false,
    "id": 240,
-   "ip": null,
+   "ip": "10.129.227.77",
    "name": "ServMon",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "servmon-240",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "104",
    "tier": "Easy"
   },
   {
