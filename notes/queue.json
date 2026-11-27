@@ -2836,18 +2836,18 @@
    "tier": "Hard"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 45,
    "free": false,
    "id": 805,
-   "ip": null,
+   "ip": "10.129.138.111",
    "name": "Eighteen",
-   "note": "",
+   "note": "solved",
    "os": "Windows",
    "retired": true,
    "slug": "eighteen-805",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "132",
    "tier": "Easy"
   },
   {
