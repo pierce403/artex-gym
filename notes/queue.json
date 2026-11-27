@@ -1576,18 +1576,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 39,
    "free": false,
    "id": 314,
-   "ip": null,
+   "ip": "10.129.95.150",
    "name": "ScriptKiddie",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "scriptkiddie-314",
-   "state": "pending",
-   "task_id": null,
+   "state": "partial:user-only",
+   "task_id": "103",
    "tier": "Easy"
   },
   {
