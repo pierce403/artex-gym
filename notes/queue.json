@@ -2611,18 +2611,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 44,
    "free": false,
    "id": 504,
-   "ip": null,
+   "ip": "10.129.228.95",
    "name": "MetaTwo",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "metatwo-504",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "127",
    "tier": "Easy"
   },
   {
