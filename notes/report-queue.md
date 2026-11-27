@@ -4,29 +4,29 @@ Generated from `notes/queue.json` (543 retired boxes) and `.work/logs/queue-run.
 
 ## Totals
 
-- solved **67**
+- solved **72**
 - timeout 6
-- skipped (no spawn) 0
+- skipped (no spawn) 1
 - partial (user only) 3
-- pending 467
+- pending 461
 
 ## By tier
 
 | tier | solved | timeout | skipped | partial | pending |
 |---|---|---|---|---|---|
-| Easy | 67 | 6 | 0 | 3 | 84 |
+| Easy | 72 | 6 | 1 | 3 | 78 |
 | Medium | 0 | 0 | 0 | 0 | 193 |
 | Hard | 0 | 0 | 0 | 0 | 122 |
 | Insane | 0 | 0 | 0 | 0 | 68 |
 
 ## Speed (solved boxes only)
 
-- n = 60
-- median 11.4 min
-- p90 21.3 min
-- max 22.1 min
-- took >12 min: 28 of 60
-- time spent on non-solves: 200 min across 15 boxes
+- n = 65
+- median 11.7 min
+- p90 21.4 min
+- max 22.2 min
+- took >12 min: 32 of 65
+- time spent on non-solves: 206 min across 21 boxes
 
 ## Not solved
 
@@ -36,6 +36,7 @@ Generated from `notes/queue.json` (543 retired boxes) and `.work/logs/queue-run.
 | 569 | Analytics | Easy | timeout | timeout after 20m |
 | 13 | Grandpa | Easy | timeout | timeout after 20m |
 | 617 | GreenHorn | Easy | partial:user-only | timeout after 20m |
+| 5 | Beep | Easy | skipped:no-spawn | error: spawn issued but no IP appeared within 120s; check th |
 | 356 | Explore | Easy | partial:user-only | timeout after 20m |
 | 678 | VulnEscape | Easy | timeout | timeout after 20m |
 | 668 | Artificial | Easy | timeout | timeout after 20m |
