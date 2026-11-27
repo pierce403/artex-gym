@@ -2371,18 +2371,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 43,
    "free": false,
    "id": 519,
-   "ip": null,
+   "ip": "10.129.138.97",
    "name": "Soccer",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "soccer-519",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "123",
    "tier": "Easy"
   },
   {
