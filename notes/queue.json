@@ -1486,18 +1486,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 39,
    "free": false,
    "id": 608,
-   "ip": null,
+   "ip": "10.129.138.60",
    "name": "Editorial",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "editorial-608",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "100",
    "tier": "Easy"
   },
   {
