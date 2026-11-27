@@ -2146,18 +2146,18 @@
    "tier": "Medium"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 42,
    "free": false,
    "id": 254,
-   "ip": null,
+   "ip": "10.129.95.225",
    "name": "Blunder",
-   "note": "",
+   "note": "solved",
    "os": "Linux",
    "retired": true,
    "slug": "blunder-254",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "115",
    "tier": "Easy"
   },
   {
