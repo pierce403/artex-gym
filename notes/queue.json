@@ -3646,18 +3646,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 49,
    "free": false,
    "id": 173,
-   "ip": null,
+   "ip": "10.129.138.145",
    "name": "FriendZone",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Linux",
    "retired": true,
    "slug": "friendzone-173",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "143",
    "tier": "Easy"
   },
   {
