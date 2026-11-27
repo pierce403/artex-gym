@@ -1561,18 +1561,18 @@
    "tier": "Easy"
   },
   {
-   "attempts": 0,
+   "attempts": 1,
    "difficulty": 39,
    "free": false,
    "id": 685,
-   "ip": null,
+   "ip": "10.129.138.28",
    "name": "RetroTwo",
-   "note": "",
+   "note": "timeout after 20m",
    "os": "Windows",
    "retired": true,
    "slug": "retrotwo-685",
-   "state": "pending",
-   "task_id": null,
+   "state": "solved",
+   "task_id": "87",
    "tier": "Easy"
   },
   {
